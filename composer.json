@@ -1,0 +1,62 @@
+{
+    "name": "yii2-app-shop",
+    "description": "Yii2 e-shop project",
+    "keywords": ["yii2", "framework", "advanced", "e-shop project"],
+    "homepage": "http://www.yiiframework.com/",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/yiisoft/yii2/issues?state=open",
+        "forum": "http://www.yiiframework.com/forum/",
+        "wiki": "http://www.yiiframework.com/wiki/",
+        "irc": "irc://irc.freenode.net/yii",
+        "source": "https://github.com/yiisoft/yii2"
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.1",
+        "yiisoft/yii2": "~2.0.14",
+        "yiisoft/yii2-bootstrap": "~2.0.0",
+        "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
+        "yiisoft/yii2-queue": "^2",
+        "dmstr/yii2-adminlte-asset": "^2",
+        "webmozart/assert": "^1.3",
+        "la-haute-societe/yii2-save-relations-behavior": "^1.7",
+        "yiisoft/yii2-authclient": "^2.1",
+        "kartik-v/yii2-widgets": "^3.4",
+        "kartik-v/yii2-field-range": "^1.3",
+        "paulzi/yii2-nested-sets": "^1.1",
+        "mihaildev/yii2-ckeditor": "^1.0",
+        "yii-dream-team/yii2-upload-behavior": "^1.2",
+        "bower-asset/font-awesome": "^4.7",
+        "bower-asset/swiper": "3.4.2",
+        "bower-asset/magnific-popup": "^1.1",
+        "elasticsearch/elasticsearch": "^5",
+        "yii-cms/yii2-robokassa": "^1.2",
+        "phpoffice/phpexcel": "^1.8",
+        "yii2tech/ar-position": "^1.0",
+        "mihaildev/yii2-elfinder": "^1.3",
+        "fishvision/yii2-migrate": "^1.0"
+    },
+    "require-dev": {
+        "yiisoft/yii2-debug": "~2.0.0",
+        "yiisoft/yii2-gii": "~2.0.0",
+        "yiisoft/yii2-faker": "~2.0.0",
+        "codeception/base": "^2.4.0",
+        "phpunit/phpunit": "~6.5.5",
+        "codeception/verify": "~1.0.0",
+        "phpmd/phpmd" : "@stable"
+    },
+    "config": {
+        "process-timeout": 1800,
+        "fxp-asset": {
+            "enabled": false
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
+}
