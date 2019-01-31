@@ -30,6 +30,9 @@ return [
                 '@vendor/yiisoft/yii2/rbac/migrations',
             ],
         ],
+        'heroku' => [
+            'class' => 'purrweb\heroku\HerokuGeneratorController',
+        ],
     ],
     'components' => [
         'log' => [

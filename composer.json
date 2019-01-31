@@ -45,13 +45,19 @@
         "codeception/base": "^2.4.0",
         "phpunit/phpunit": "~6.5.5",
         "codeception/verify": "~1.0.0",
-        "phpmd/phpmd" : "@stable"
+        "phpmd/phpmd" : "@stable",
+        "purrweb/yii2-heroku": "*"
     },
     "config": {
         "process-timeout": 1800,
         "fxp-asset": {
             "enabled": false
         }
+    },
+        "scripts": {
+        "post-install-cmd": [
+            "sh post-install-cmd.sh"
+        ]
     },
     "repositories": [
         {

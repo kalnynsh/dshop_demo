@@ -52,6 +52,9 @@ phpunit.phar
 /**/*/params-local.php
 /environments/dev/common/config/params-local.php
 
+# All *.ini files
+/**/*/*.ini
+
 # Eclipce
 /.metadata/*
 /.buildpath

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b9a82dbb50dc47b56f7d3b10a8565d8a",
+    "content-hash": "a5fb8a5ee526b7e48dfa6bb7a6afaf69",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -52,16 +52,16 @@
         },
         {
             "name": "bower-asset/bootstrap",
-            "version": "v3.3.7",
+            "version": "v3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "0b9c4a4007c44201dce9a6cc1a38407005c26c86"
+                "reference": "4c547f2175b9a05aa43551f6927da83fe249ce42"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/0b9c4a4007c44201dce9a6cc1a38407005c26c86",
-                "reference": "0b9c4a4007c44201dce9a6cc1a38407005c26c86",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/4c547f2175b9a05aa43551f6927da83fe249ce42",
+                "reference": "4c547f2175b9a05aa43551f6927da83fe249ce42",
                 "shasum": null
             },
             "require": {
@@ -3219,16 +3219,16 @@
         },
         {
             "name": "yiisoft/yii2-authclient",
-            "version": "2.1.7",
+            "version": "2.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-authclient.git",
-                "reference": "51ed208515a2d04c538b2c498c4f760481a431b5"
+                "reference": "215bdcfbe9e6e362cbdbc31166bc9630f1edbbf7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-authclient/zipball/51ed208515a2d04c538b2c498c4f760481a431b5",
-                "reference": "51ed208515a2d04c538b2c498c4f760481a431b5",
+                "url": "https://api.github.com/repos/yiisoft/yii2-authclient/zipball/215bdcfbe9e6e362cbdbc31166bc9630f1edbbf7",
+                "reference": "215bdcfbe9e6e362cbdbc31166bc9630f1edbbf7",
                 "shasum": ""
             },
             "require": {
@@ -3267,24 +3267,24 @@
                 "oauth",
                 "yii2"
             ],
-            "time": "2018-09-20T07:23:55+00:00"
+            "time": "2019-01-28T18:52:05+00:00"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
-            "version": "2.0.8",
+            "version": "2.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-bootstrap.git",
-                "reference": "3f49c47924bb9fa5363c3fc7b073d954168cf438"
+                "reference": "4677951dda712dd99d5bf2a127eaee118dfea860"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/3f49c47924bb9fa5363c3fc7b073d954168cf438",
-                "reference": "3f49c47924bb9fa5363c3fc7b073d954168cf438",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/4677951dda712dd99d5bf2a127eaee118dfea860",
+                "reference": "4677951dda712dd99d5bf2a127eaee118dfea860",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/bootstrap": "3.3.* | 3.2.* | 3.1.*",
+                "bower-asset/bootstrap": "3.4.* | 3.3.* | 3.2.* | 3.1.*",
                 "yiisoft/yii2": "~2.0.6"
             },
             "type": "yii2-extension",
@@ -3327,7 +3327,7 @@
                 "bootstrap",
                 "yii2"
             ],
-            "time": "2018-02-16T10:41:52+00:00"
+            "time": "2019-01-29T21:39:45+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -5066,6 +5066,50 @@
                 "response"
             ],
             "time": "2016-08-06T14:39:51+00:00"
+        },
+        {
+            "name": "purrweb/yii2-heroku",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PurrWeb/yii2-heroku.git",
+                "reference": "ea99076cf1f57db5f6c220ca293d83f74f33b041"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PurrWeb/yii2-heroku/zipball/ea99076cf1f57db5f6c220ca293d83f74f33b041",
+                "reference": "ea99076cf1f57db5f6c220ca293d83f74f33b041",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "purrweb\\heroku\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dmitriy Krista",
+                    "email": "dmitriy.krista@gmail.com"
+                }
+            ],
+            "description": "Generate yii2 environments for easy deployment on heroku",
+            "homepage": "https://github.com/PurrWeb/yii2-heroku",
+            "keywords": [
+                "deploy",
+                "extension",
+                "generator",
+                "heroku",
+                "yii2"
+            ],
+            "time": "2015-06-30T09:43:40+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
