@@ -42,8 +42,17 @@ phpunit.phar
 
 /docs/*
 
-/**/*/params-local.php
-/environments/dev/common/config/params-local.php
+# /**/*/*-local.php
+/environments/dev/*/**/*-local.php
+
+/backend/config/*-local.php
+
+/common/config/*-local.php
+/common/config/*.ini
+
+/frontend/config/*-local.php
+/frontend/config/*.ini
+
 
 # All *.ini files
 /**/*/*.ini
