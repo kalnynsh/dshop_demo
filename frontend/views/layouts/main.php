@@ -131,6 +131,12 @@ AppAsset::register($this);
                   <a href="<?= Url::home() ?>">
                     <img src="<?= \Yii::getAlias('@web/image/logo.png') ?>">
                   </a>
+                  <span class="logo-text">
+                    Демонстрационный сайт
+                    <a href="<?= Url::home() ?>">
+                      <span class="logo-text-label">D`shop</span>
+                    </a>
+                  </span>
               </div>
             </div>
             <div class="col-sm-5">

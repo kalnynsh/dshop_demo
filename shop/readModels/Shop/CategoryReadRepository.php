@@ -3,28 +3,29 @@
 namespace shop\readModels\Shop;
 
 use yii\helpers\ArrayHelper;
+use yii\db\ActiveQuery;
 use shop\readModels\Shop\views\CategoryView;
 use shop\entities\Shop\Category;
-use Elasticsearch\Client;
+// use Elasticsearch\Client;
 
 class CategoryReadRepository
 {
     /** @property Client $client */
-    private $client;
+    // private $client;
 
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
-    }
+    // public function __construct(Client $client)
+    // {
+    //     $this->client = $client;
+    // }
 
     public function getRoot(): Category
     {
-        return Category::find()->roots()->one();
+        return $this->query()->roots()->one();
     }
 
     public function find($id): ?Category
     {
-        return Category::find()
+        return $this->query()
             ->andWhere(['id' => $id])
             ->andWhere(['>', 'depth', 0])
             ->one();
@@ -32,7 +33,7 @@ class CategoryReadRepository
 
     public function findBySlug($slug): ?Category
     {
-        return Category::find()
+        return $this->query()
             ->andWhere(['slug' => $slug])
             ->andWhere(['>', 'depth', 0])
             ->one();
@@ -66,16 +67,26 @@ class CategoryReadRepository
             $query->andWhere(['depth' => 1]);
         }
 
-        $counts = $this->getCategoriesCountArray();
-
         return array_map(
-            function (Category $category) use ($counts) {
-                $categoryCount = $this->getCountOfCategory($counts, $category);
+            function (Category $category) {
+                $productCount = $this->getProductCountByCategory($category);
 
-                return new CategoryView($category, $categoryCount);
+                return new CategoryView($category, $productCount);
             },
             $query->all()
         );
+    }
+
+    private function query(): ActiveQuery
+    {
+        return Category::find();
+    }
+
+    private function getQuery()
+    {
+        return $this->query()
+            ->andWhere(['>', 'depth', 0])
+            ->orderBy('lft');
     }
 
     public function getAll(): array
@@ -83,46 +94,8 @@ class CategoryReadRepository
         return $this->getQuery()->all();
     }
 
-    private function getQuery()
+    private function getProductCountByCategory(Category $category): int
     {
-        return Category::find()
-            ->andWhere(['>', 'depth', 0])
-            ->orderBy('lft');
-    }
-
-    private function getCategoryAggs()
-    {
-        return $this->client->search([
-            'index' => 'shop',
-            'type' => 'products',
-            'body' => [
-                'size' => 0,
-                'aggs' => [
-                    'group_by_category' => [
-                        'terms' => [
-                            'field' => 'categories',
-                        ],
-                    ],
-                ],
-            ],
-        ]);
-    }
-
-    private function getCategoriesCountArray()
-    {
-        $aggs = $this->getCategoryAggs();
-
-        $counts = ArrayHelper::map(
-            $aggs['aggregations']['group_by_category']['buckets'],
-            'key',
-            'doc_count'
-        );
-
-        return $counts;
-    }
-
-    private function getCountOfCategory($counts, Category $category)
-    {
-        return ArrayHelper::getValue($counts, $category->id, 0);
+        return (new ProductReadRepository())->getCountByCategory($category);
     }
 }

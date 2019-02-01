@@ -31,7 +31,6 @@
         "bower-asset/font-awesome": "^4.7",
         "bower-asset/swiper": "3.4.2",
         "bower-asset/magnific-popup": "^1.1",
-        "elasticsearch/elasticsearch": "^5",
         "yii-cms/yii2-robokassa": "^1.2",
         "phpoffice/phpexcel": "^1.8",
         "yii2tech/ar-position": "^1.0",
@@ -53,11 +52,6 @@
         "fxp-asset": {
             "enabled": false
         }
-    },
-        "scripts": {
-        "post-install-cmd": [
-            "sh post-install-cmd.sh"
-        ]
     },
     "repositories": [
         {

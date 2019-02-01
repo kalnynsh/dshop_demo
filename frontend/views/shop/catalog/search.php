@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($searchForm, 'category')
                     ->dropDownList(
                         $searchForm->categoriesList(),
-                        ['prompt' => '']
+                        ['prompt' => 'Выберите категорию']
                     )
                 ?>
             </div>
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($searchForm, 'brand')
                     ->dropDownList(
                         $searchForm->brandsList(),
-                        ['prompt' => '']
+                        ['prompt' => 'Выберите бренд']
                     )
                 ?>
             </div>

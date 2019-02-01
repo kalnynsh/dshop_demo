@@ -34,13 +34,6 @@ phpunit.phar
 # vagrant runtime
 /.vagrant
 
-# ignore generated files
-#/frontend/web/index.php
-#/frontend/web/index-test.php
-#/frontend/web/robots.txt
-#/backend/web/index.php
-#/backend/web/index-test.php
-#/backend/web/robots.txt
 
 # Logs
 /_log/*
@@ -60,5 +53,7 @@ phpunit.phar
 /.buildpath
 /.project
 
-# Files
-/files
+# Internal links in frontend/web
+/frontend/web/api
+/frontend/web/backend
+/frontend/web/static

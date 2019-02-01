@@ -11,7 +11,6 @@ use shop\readModels\Shop\BrandReadRepository;
 use shop\forms\Shop\Search\SearchForm;
 use shop\forms\Shop\ReviewForm;
 use shop\forms\Shop\AddToCartForm;
-use Yii;
 
 class CatalogController extends Controller
 {
@@ -21,6 +20,7 @@ class CatalogController extends Controller
     private $categories;
     private $brands;
     private $tags;
+    private $yiiApp;
 
     public function __construct(
         $id,
@@ -36,6 +36,7 @@ class CatalogController extends Controller
         $this->categories = $categories;
         $this->brands = $brands;
         $this->tags = $tags;
+        $this->yiiApp = \Yii::$app;
     }
 
     /**
@@ -131,8 +132,8 @@ class CatalogController extends Controller
         }
 
         $this->layout = 'blank';
-        $cartForm = new AddToCartForm($product);
-        $reviewForm = new ReviewForm();
+        $cartForm = $this->getAddToCartForm($product);
+        $reviewForm = $this->getReviewForm();
 
         return $this->render('product', [
             'product' => $product,
@@ -148,8 +149,8 @@ class CatalogController extends Controller
      */
     public function actionSearch()
     {
-        $form = new SearchForm();
-        $form->load(Yii::$app->request->queryParams);
+        $form = $this->getSearchForm();
+        $form->load($this->yiiApp->request->queryParams);
         $form->validate();
 
         $dataProvider = $this->products->search($form);
@@ -158,5 +159,20 @@ class CatalogController extends Controller
             'dataProvider' => $dataProvider,
             'searchForm' => $form,
         ]);
+    }
+
+    private function getSearchForm(): SearchForm
+    {
+        return new SearchForm();
+    }
+
+    private function getAddToCartForm($params): AddToCartForm
+    {
+        return new AddToCartForm($params);
+    }
+
+    private function getReviewForm(): ReviewForm
+    {
+        return new ReviewForm();
     }
 }

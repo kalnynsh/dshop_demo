@@ -137,6 +137,17 @@ div.required .control-label:before {
 .logo img {
 	height: 100%;
 }
+.logo-text {
+	font-size: 14px;
+}
+.logo-text-label {
+	font-weight: 600;
+	background-color:#229ac8;
+	color: #fff;
+	padding-left: 5px;
+	padding-right: 5px;
+	border-radius: 5px;
+}
 /* search */
 #search {
 	margin-bottom: 10px;

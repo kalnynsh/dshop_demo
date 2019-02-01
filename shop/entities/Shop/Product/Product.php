@@ -6,7 +6,6 @@ use yii\web\UploadedFile;
 use yii\db\ActiveRecord;
 use yii\db\ActiveQuery;
 use shop\entities\behaviors\MetaBehavior;
-use shop\entities\behaviors\ElasticProductBehavior;
 use shop\entities\User\WishlistItem;
 use shop\entities\Shop\Tag;
 use shop\entities\Shop\Product\queries\ProductQuery;
@@ -645,7 +644,6 @@ class Product extends ActiveRecord
                     'reviews',
                 ],
             ],
-            ElasticProductBehavior::class,
         ];
     }
 

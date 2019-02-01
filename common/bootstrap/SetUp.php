@@ -11,20 +11,13 @@ use shop\cart\storage\CookieStorage;
 use shop\cart\cost\calculator\SimpleCost;
 use shop\cart\cost\calculator\DynamicCost;
 use shop\cart\Cart;
-use Elasticsearch\ClientBuilder;
-use Elasticsearch\Client;
 use yii\rbac\ManagerInterface;
-use Yii;
 
 class SetUp implements BootstrapInterface
 {
     public function bootstrap($app): void
     {
-        $container = Yii::$container;
-
-        $container->setSingleton(Client::class, function () {
-            return ClientBuilder::create()->build();
-        });
+        $container = \Yii::$container;
 
         $container->setSingleton(
             Cache::class,

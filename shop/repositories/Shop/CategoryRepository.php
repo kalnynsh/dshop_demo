@@ -16,6 +16,11 @@ class CategoryRepository
         return $category;
     }
 
+    public function find($id): ?Category
+    {
+        return Category::findOne($id);
+    }
+
     public function save(Category $category): void
     {
         if (!$category->save()) {
