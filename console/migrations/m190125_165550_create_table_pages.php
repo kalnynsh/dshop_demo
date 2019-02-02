@@ -22,7 +22,7 @@ class m190125_165550_create_table_pages extends Migration
             'title' => $this->string()->notNull(),
             'slug' => $this->string()->notNull(),
             'content' => 'MEDIUMTEXT',
-            'meta_json' => 'JSON NOT NULL',
+            'meta_json' => 'JSON not null',
             'lft' => $this->integer()->notNull(),
             'rgt' => $this->integer()->notNull(),
             'depth' => $this->integer()->notNull(),

@@ -23,7 +23,7 @@ class m181014_105337_create_table_shop_categories extends Migration
             'slug' => $this->string()->notNull(),
             'title' => $this->string(),
             'description' => $this->string(),
-            'meta_json' => 'JSON NOT NULL',
+            'meta_json' => 'JSON not null',
             'lft' => $this->integer()->notNull(),
             'rgt' => $this->integer()->notNull(),
             'depth' => $this->integer()->notNull(),

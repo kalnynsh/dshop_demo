@@ -26,7 +26,7 @@ class m190121_140613_create_table_blog_posts extends Migration
             'status' => $this->integer()->notNull(),
             'category_id' => $this->integer()->notNull(),
             'created_at' => $this->integer()->unsigned()->notNull(),
-            'meta_json' => 'JSON NOT NULL',
+            'meta_json' => 'JSON not null',
         ], $tableOptions);
 
         $this->createIndex(
