@@ -30,7 +30,7 @@ class m181224_081931_create_table_shop_orders extends Migration
             'note' => $this->text(),
             'current_status' => $this->integer()->notNull(),
             'cancel_reason' => $this->text(),
-            'statuses_json' => 'JSON not null',
+            'statuses_json' => $this->json()->notNull(),
             'customer_name' => $this->string(),
             'customer_phone' => $this->string(),
             'delivery_index' => $this->string(),

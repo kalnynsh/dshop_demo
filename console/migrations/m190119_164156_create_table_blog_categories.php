@@ -24,7 +24,7 @@ class m190119_164156_create_table_blog_categories extends Migration
             'title' => $this->string(),
             'description' => $this->text(),
             'sort' => $this->integer()->notNull(),
-            'meta_json' => 'JSON not null',
+            'meta_json' => $this->json()->notNull(),
         ], $tableOptions);
 
         $this->createIndex(

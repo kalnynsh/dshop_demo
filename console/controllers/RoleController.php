@@ -16,7 +16,7 @@ use shop\entities\User\User;
 class RoleController extends Controller
 {
     private $users;
-    private $pswd = 'a&Y3$p1mE!q5';
+    private $pswd;
 
     public function __construct(
         $id,
@@ -26,6 +26,7 @@ class RoleController extends Controller
     ) {
         parent::__construct($id, $module, $config);
         $this->users = $users;
+        $this->pswd = getenv('ROLE_MANAGERS_CODE');
     }
 
     public function actionAssign(): void
@@ -36,6 +37,11 @@ class RoleController extends Controller
         $this->prompt('Enter code:', [
             'required' => true,
             'validator' => function ($input, &$error) {
+                if (empty($this->pswd)) {
+                    $error = 'Code for Role management not set!' . PHP_EOL;
+                    return false;
+                }
+
                 if ($input !== $this->pswd) {
                     $error = 'Incorrect!' . PHP_EOL;
                     return false;

@@ -31,7 +31,7 @@ class m181019_161859_create_table_shop_products extends Migration
             'price_old' => $this->integer(),
             'price_new' => $this->integer(),
             'rating' => $this->decimal(3, 2),
-            'meta_json' => 'JSON not null',
+            'meta_json' => $this->json()->notNull(),
         ], $tableOptions);
 
         $this->createIndex('{{%idx_shop_products_code}}', '{{%shop_products}}', 'code', true);
