@@ -12,7 +12,7 @@ class m181025_070503_add_column_value_to_shop_values_table extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('{{%shop_values}}', 'value', $this->string());
+        $this->addColumn('{{%shop_values}}', '[[value]]', $this->string());
     }
 
     /**
@@ -20,6 +20,6 @@ class m181025_070503_add_column_value_to_shop_values_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropColumn('{{%shop_values}}', 'value');
+        $this->dropColumn('{{%shop_values}}', '[[value]]');
     }
 }

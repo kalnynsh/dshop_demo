@@ -12,7 +12,7 @@ class m181025_070402_add_column_quantity_to_shop_modifications_table extends Mig
      */
     public function safeUp()
     {
-        $this->addColumn('{{%shop_modifications}}', 'quantity', $this->integer());
+        $this->addColumn('{{%shop_modifications}}', '[[quantity]]', $this->integer());
     }
 
     /**
@@ -20,6 +20,6 @@ class m181025_070402_add_column_quantity_to_shop_modifications_table extends Mig
      */
     public function safeDown()
     {
-        $this->dropColumn('{{%shop_modifications}}', 'quantity');
+        $this->dropColumn('{{%shop_modifications}}', '[[quantity]]');
     }
 }

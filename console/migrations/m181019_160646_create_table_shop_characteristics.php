@@ -23,7 +23,7 @@ class m181019_160646_create_table_shop_characteristics extends Migration
             'type' => $this->string(32)->notNull(),
             'required' => $this->boolean()->notNull(),
             'default' => $this->string(),
-            'variants_json' => $this->json()->notNull(),
+            'variants_json' => $this->text()->notNull(),
             'sort' => $this->integer()->notNull(),
         ], $tableOptions);
     }
