@@ -32,10 +32,12 @@ return [
     'Development' => [
         'path' => 'dev',
         'setWritable' => [
+            'common/runtime',
+            'api/runtime',
             'backend/runtime',
             'backend/web/assets',
             'frontend/runtime',
-            'frontend/web/assets',
+            'frontend/web/assets'
         ],
         'setExecutable' => [
             'yii',
@@ -48,6 +50,8 @@ return [
     'Production' => [
         'path' => 'prod',
         'setWritable' => [
+            'common/runtime',
+            'api/runtime',
             'backend/runtime',
             'backend/web/assets',
             'frontend/runtime',
@@ -57,13 +61,14 @@ return [
             'yii',
         ],
         'setCookieValidationKey' => [
-            'backend/config/main-local.php',
-            'frontend/config/main-local.php',
+            'common/config/params-local.php',
         ],
     ],
     'Heroku' => [
         'path' => 'heroku',
         'setWritable' => [
+            'common/runtime',
+            'api/runtime',
             'backend/runtime',
             'backend/web/assets',
             'frontend/runtime',

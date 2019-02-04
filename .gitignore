@@ -1,8 +1,8 @@
-./*/**/*.ini
 # yii console commands
 /yii
 /yii_test
 /yii_test.bat
+/yii.bat
 
 # phpstorm project files
 .idea
@@ -35,16 +35,16 @@ phpunit.phar
 # vagrant runtime
 /.vagrant
 
-
 # Logs
-/_log/*
-/log/*
+/_log/*/**
+/log/*/**
 /*.log
 
 /docs/*
 
 # /**/*/*-local.php
 /environments/dev/*/**/*-local.php
+/environments/dev/*/**/*.ini
 
 /backend/config/*-local.php
 
@@ -62,6 +62,11 @@ phpunit.phar
 /backend/web/index-test.php
 /backend/web/index.php
 /backend/web/robots.txt
+
+/api/config/*-local.php
+/api/config/main-local.php
+/api/config/params-local.php
+/api/config/test-local.php
 
 # All *.ini files
 /**/*/*.ini

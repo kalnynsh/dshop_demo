@@ -30,6 +30,9 @@ return [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
+            'messageConfig' => [
+                'from' => ['support@example.com' => 'Shop']
+            ],
             'useFileTransport' => true,
         ],
         'robokassa' => [
@@ -38,7 +41,7 @@ return [
             'sMerchantLogin' => '',
             'sMerchantPass1' => '',
             'sMerchantPass2' => '',
-            'isTest' => !YII_ENV_PROD,
+            'isTest' => true,
         ],
     ],
 ];
