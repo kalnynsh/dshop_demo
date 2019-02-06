@@ -107,13 +107,14 @@ AppAsset::register($this);
                 </ul>
               </li>
               <li>
-                <a href="<?= Url::to(['/cabinet/wishlist/index']) ?>" id="wishlist-total" title="Список желаний">
+                <a href="<?= Html::encode(Url::to(['/cabinet/wishlist/index'])) ?>"
+                id="wishlist-total" title="Список желаний">
                   <i class="fa fa-heart"></i>
                   <span class="hidden-xs hidden-sm hidden-md">Список желаний</span>
                 </a>
               </li>
               <li>
-                <a href="<?= Url::to(['/shop/cart/index']) ?>" title="Моя корзина">
+                <a href="<?= Html::encode(Url::to(['/shop/cart/index'])) ?>" title="Моя корзина">
                   <i class="fa fa-shopping-cart"></i>
                   <span class="hidden-xs hidden-sm hidden-md">Моя корзина</span>
                 </a>
@@ -133,7 +134,7 @@ AppAsset::register($this);
                   </a>
                   <span class="logo-text">
                     Демонстрационный сайт
-                    <a href="<?= Url::home() ?>">
+                    <a href="<?= Html::encode(Url::home()) ?>">
                       <span class="logo-text-label">D`shop</span>
                     </a>
                   </span>

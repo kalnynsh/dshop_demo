@@ -2,7 +2,7 @@
 
 namespace shop\entities\Blog\Post;
 
-use yiidreamteam\upload\ImageUploadBehavior;
+use shop\extra\YiiDreamTeam\ImageUploadBehavior;
 use yii\web\UploadedFile;
 use yii\db\ActiveRecord;
 use yii\db\ActiveQuery;

@@ -3,7 +3,7 @@
 namespace shop\services;
 
 use Yii;
-use PHPThumb\GD;
+use shop\extra\PHPThumb\GD;
 
 class WaterMarker
 {

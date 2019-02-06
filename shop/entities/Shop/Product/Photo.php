@@ -2,7 +2,7 @@
 
 namespace shop\entities\Shop\Product;
 
-use yiidreamteam\upload\ImageUploadBehavior;
+use shop\extra\YiiDreamTeam\ImageUploadBehavior;
 use yii\web\UploadedFile;
 use yii\db\ActiveRecord;
 use shop\services\WaterMarker;
@@ -20,6 +20,7 @@ class Photo extends ActiveRecord
     {
         $photo = new static();
         $photo->file = $file;
+
         return $photo;
     }
 
