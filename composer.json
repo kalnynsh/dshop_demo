@@ -34,7 +34,9 @@
         "phpoffice/phpexcel": "^1.8",
         "yii2tech/ar-position": "^1.0",
         "mihaildev/yii2-elfinder": "^1.3",
-        "fishvision/yii2-migrate": "^1.0"
+        "fishvision/yii2-migrate": "^1.0",
+        "filsh/yii2-oauth2-server": "^2.0",
+        "guzzlehttp/guzzle": "^6.3"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

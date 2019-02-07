@@ -87,6 +87,14 @@ class UserRepository
         ]);
     }
 
+    public function findActiveByUsername($username): ?User
+    {
+        return $this->findBy([
+            'username' => $username,
+            'status' => User::STATUS_ACTIVE,
+        ]);
+    }
+
     private function findBy(array $condition): ?User
     {
         return $this->query->andWhere($condition)->limit(1)->one();
