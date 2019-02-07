@@ -5,6 +5,8 @@ namespace frontend\controllers\auth;
 use yii\web\Controller;
 use shop\services\auth\AuthService;
 use shop\forms\auth\LoginForm;
+use shop\entities\User\User;
+use common\auth\Identity;
 
 class AuthController extends Controller
 {
@@ -38,10 +40,13 @@ class AuthController extends Controller
         if ($form->load($this->yiiApp->request->post()) && $form->validate()) {
             try {
                 $user = $this->service->auth($form);
-                $duration = $form->rememberMe ? (3600 * 24 * 30) : 0;
+                $identity = $this->getIdentity($user);
+
+                $duration = $form->rememberMe
+                    ? $this->yiiApp->params['user.rememberMeDuration'] : 0;
 
                 $this->yiiApp->user->login(
-                    $user,
+                    $identity,
                     $duration
                 );
 
@@ -73,5 +78,10 @@ class AuthController extends Controller
     private function getLoginForm(): LoginForm
     {
         return new LoginForm();
+    }
+
+    private function getIdentity(User $user): Identity
+    {
+        return new Identity($user);
     }
 }

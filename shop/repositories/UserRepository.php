@@ -6,14 +6,21 @@ use shop\entities\User\User;
 
 class UserRepository
 {
+    private $query;
+
+    public function __construct()
+    {
+        $this->query = User::find();
+    }
+
     public function findByUsernameOrEmail($value): ?User
     {
-        return User::find()->andWhere(['or', ['username' => $value], ['email' => $value]])->one();
+        return $this->query->andWhere(['or', ['username' => $value], ['email' => $value]])->one();
     }
 
     public function findByNetworkIdentity($network, $identity): ?User
     {
-        return User::find()
+        return $this->query
             ->joinWith('networks n')
             ->andWhere(['n.network' => $network, 'n.identity' => $identity])
             ->one();
@@ -44,6 +51,15 @@ class UserRepository
         return (bool) User::findByPasswordResetToken($token);
     }
 
+    private function getBy(array $condition): User
+    {
+        if (!$user = $this->query->andWhere($condition)->limit(1)->one()) {
+            throw new NotFoundException('User not found.');
+        }
+
+        return $user;
+    }
+
     public function save(User $user): void
     {
         if (!$user->save()) {
@@ -60,15 +76,19 @@ class UserRepository
 
     public function findOne($id): ?User
     {
-        return User::findOne($id);
+        return $this->findBy(['id' => $id]);
     }
 
-    private function getBy(array $condition): User
+    public function findActiveById($id)
     {
-        if (!$user = User::find()->andWhere($condition)->limit(1)->one()) {
-            throw new NotFoundException('User not found.');
-        }
+        return $this->findBy([
+            'id' => $id,
+            'status' => User::STATUS_ACTIVE,
+        ]);
+    }
 
-        return $user;
+    private function findBy(array $condition): ?User
+    {
+        return $this->query->andWhere($condition)->limit(1)->one();
     }
 }
