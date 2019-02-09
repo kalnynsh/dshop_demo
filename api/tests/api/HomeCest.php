@@ -8,8 +8,12 @@ class HomeCest
 {
     public function mainPage(ApiTester $I)
     {
-        $I->sendGet('/');
+        $I->sendGET('/');
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'version' => '1.0.0',
+        ]);
     }
 }
