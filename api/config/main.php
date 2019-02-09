@@ -12,7 +12,7 @@ return [
     'basePath' => dirname(__DIR__),
     'aliases' => [
         '@staticRoot' => $params['staticPath'],
-        '@static'   => $params['staticHostInfo'],
+        '@static' => $params['staticHostInfo'],
     ],
     'controllerNamespace' => 'api\controllers',
     'bootstrap' => [
@@ -99,7 +99,7 @@ return [
             [
                 'allow' => true,
                 'roles' => ['@'],
-            ]
+            ],
         ],
     ],
     'as exceptionFilter' => [

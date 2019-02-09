@@ -41,7 +41,7 @@ return [
             'sMerchantLogin' => '',
             'sMerchantPass1' => '',
             'sMerchantPass2' => '',
-            'isTest' => true,
+            'isTest' => 1,
         ],
     ],
 ];

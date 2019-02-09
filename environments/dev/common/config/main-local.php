@@ -3,6 +3,11 @@
 $db_config = \parse_ini_file(__DIR__ . '/db_config.ini');
 
 return [
+    'controllerMap' => [
+        'heroku' => [
+            'class' => 'purrweb\heroku\HerokuGeneratorController',
+        ],
+    ],
     'components' => [
         'db' => [
             'class' => $db_config['class'],

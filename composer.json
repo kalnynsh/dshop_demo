@@ -46,7 +46,9 @@
         "phpunit/phpunit": "~6.5.5",
         "codeception/verify": "~1.0.0",
         "phpmd/phpmd" : "@stable",
-        "purrweb/yii2-heroku": "*"
+        "purrweb/yii2-heroku": "*",
+        "zircote/swagger-php": "^3.0",
+        "flow/jsonpath": "^0.4"
     },
     "config": {
         "process-timeout": 1800,
