@@ -36,6 +36,7 @@ return [
             'api/runtime',
             'backend/runtime',
             'backend/web/assets',
+            'console/runtime',
             'frontend/runtime',
             'frontend/web/assets',
             'static',
@@ -45,7 +46,13 @@ return [
             'yii_test',
         ],
         'setCookieValidationKey' => [
+            'common/config/codeception-local.php',
             'common/config/params-local.php',
+        ],
+        'createSymlink' => [
+            'frontend/web/backend' => 'backend/web',
+            'frontend/web/static' => 'static',
+            'frontend/web/api' => 'api/web',
         ],
     ],
     'Production' => [
@@ -55,6 +62,7 @@ return [
             'api/runtime',
             'backend/runtime',
             'backend/web/assets',
+            'console/runtime',
             'frontend/runtime',
             'frontend/web/assets',
             'static',
@@ -73,6 +81,7 @@ return [
             'api/runtime',
             'backend/runtime',
             'backend/web/assets',
+            'console/runtime',
             'frontend/runtime',
             'frontend/web/assets',
             'static',

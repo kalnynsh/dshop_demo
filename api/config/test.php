@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'id' => 'app-api-tests'
+    'id' => 'app-api-tests',
 ];

@@ -1,9 +1,10 @@
-class_name: ApiTester
+suite_namespace: api\tests\api
+actor: ApiTester
 modules:
     enabled:
         - REST:
             depends: PhpBrowser
-            url: 'http://cshop.local/index-test.php'
+            url: 'http://127.0.0.1:8080/index-test.php'
             part: [json]
         - Yii2:
             part: [orm, fixtures]
