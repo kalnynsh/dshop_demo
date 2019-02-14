@@ -50,7 +50,7 @@ class SignupService
 
         $this->transaction->wrap(function () use ($user) {
             $this->users->save($user);
-            $this->roles->assing($user->id, Rbac::ROLE_USER);
+            $this->roles->assign($user->id, Rbac::ROLE_USER);
         });
 
         $sent = $this->mailer
