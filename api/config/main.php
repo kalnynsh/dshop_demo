@@ -25,8 +25,27 @@ return [
                 'application/xml' => 'xml',
             ],
         ],
+        \shop\extra\oauth2server\Bootstrap::class,
     ],
-    'modules' => [],
+    'modules' => [
+        'oauth2' => [
+            'class' => \shop\extra\oauth2server\Module::class,
+            'tokenParamName' => 'access_token',
+            'tokenAccessLifetime' => 3600 * 24,
+            'storageMap' => [
+                'user_credentials' => \common\auth\Identity::class,
+            ],
+            'grantTypes' => [
+                'user_credentials' => [
+                    'class' => \OAuth2\GrantType\UserCredentials::class,
+                ],
+                'refresh_token' => [
+                    'class' => \OAuth2\GrantType\RefreshToken::class,
+                    'always_issue_new_refresh_token' => true,
+                ],
+            ],
+        ],
+    ],
     'components' => [
         'request' => [
             'parsers' => [
@@ -62,18 +81,38 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '' => 'site/index',
+                'POST oauth2/<action:\w+>' => 'oauth2/rest/<action>',
+            ],
+        ],
+    ],
+    'as authenticator' => [
+        'class' => shop\extra\oauth2server\filters\auth\CompositeAuth::class,
+        'except' => ['site/index', 'oauth2/rest/token'],
+        'authMethods' => [
+            [
+                'class' => yii\filters\auth\HttpBearerAuth::class
+            ],
+            [
+                'class' => yii\filters\auth\QueryParamAuth::class,
+                'tokenParam' => 'accessToken',
             ],
         ],
     ],
     'as access' => [
         'class' => 'yii\filters\AccessControl',
-        'except' => ['site/index'],
+        'except' => [
+            'site/index',
+            'oauth2/rest/token',
+        ],
         'rules' => [
             [
                 'allow' => true,
                 'roles' => ['@'],
             ],
         ],
+    ],
+    'as exceptionFilter' => [
+        'class' => shop\extra\oauth2server\filters\ErrorToExceptionFilter::class,
     ],
     'params' => $params,
 ];

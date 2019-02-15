@@ -1,5 +1,5 @@
 {
-    "name": "yii2-app-shop",
+    "name": "kalnynsh/dshop_demo",
     "description": "Yii2 e-shop project",
     "keywords": ["yii2", "framework", "advanced", "e-shop project"],
     "homepage": "http://www.yiiframework.com/",
@@ -35,8 +35,9 @@
         "yii2tech/ar-position": "^1.0",
         "mihaildev/yii2-elfinder": "^1.3",
         "fishvision/yii2-migrate": "^1.0",
-        "filsh/yii2-oauth2-server": "^2.0",
-        "guzzlehttp/guzzle": "^6.3"
+        "guzzlehttp/guzzle": "^6.3",
+        "bshaffer/oauth2-server-php": "^1.11.0",
+        "filsh/yii2-oauth2-server": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
