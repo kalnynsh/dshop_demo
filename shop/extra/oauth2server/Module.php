@@ -104,7 +104,6 @@ class Module extends \yii\base\Module
                 [
                     'token_param_name' => $this->tokenParamName,
                     'access_lifetime' => $this->tokenAccessLifetime,
-                    /** add more ... */
                 ],
                 $grantTypes,
             ]);
@@ -116,52 +115,12 @@ class Module extends \yii\base\Module
 
     public function getRequest()
     {
-        $yiiWebRequest = $this->get('request');
-        $query = $yiiWebRequest->get();
-        $request = $yiiWebRequest->post();
-
-        $attributes = $yiiWebRequest->getQueryParams();
-        $cookies = [];
-        $files = [];
-
-        $server = $_SERVER;
-        $content = $yiiWebRequest->getRawBody();
-        $headers = $yiiWebRequest->getHeaders()->toArray();
-
-        $oauthRequest = new \OAuth2\Request(
-            $query,
-            $request,
-            $attributes,
-            $cookies,
-            $files,
-            $server,
-            $content,
-            $headers
-        );
-
-        return $oauthRequest;
+        return Request::createFromGlobals();
     }
-
-/*
-    public function getRequest()
-    {
-        // if (!$this->has('request')) {
-        //     $this->set('request', Request::createFromGlobals());
-        // }
-
-        $this->set('request', Request::createFromGlobals());
-
-        return $this->get('request');
-    }
-*/
 
     public function getResponse()
     {
-        if (!$this->has('response')) {
-            $this->set('response', new Response());
-        }
-
-        return $this->get('response');
+        return new Response();
     }
 
     /**
