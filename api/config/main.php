@@ -81,6 +81,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '' => 'site/index',
+                'profile' => 'user/profie/index',
                 'POST oauth2/<action:\w+>' => 'oauth2/rest/<action>',
             ],
         ],
