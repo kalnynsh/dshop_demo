@@ -148,4 +148,25 @@ class ProductSerializer
             ],
         ];
     }
+
+    public function serializeWishList(Product $product): array
+    {
+        return [
+            'id' => $product->id,
+            'code' => $product->code,
+            'name' => $product->name,
+            'price' => [
+                'new' => $product->price_new,
+                'old' => $product->price_old,
+            ],
+            'thumbnail' => (
+                $product->mainPhoto
+                ? $product->mainPhoto->getThumbFileUrl('file', 'cart_list') : null
+            ),
+            '_links' => [
+                'self' => ['href' => Url::to(['/shop/product/view', 'id' => $product->id], true)],
+                'cart' => ['href' => Url::to(['/shop/cart/add', 'id' => $product->id], true)],
+            ],
+        ];
+    }
 }
