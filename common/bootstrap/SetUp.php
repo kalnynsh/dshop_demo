@@ -7,7 +7,7 @@ use yii\di\Instance;
 use yii\caching\Cache;
 use yii\base\BootstrapInterface;
 use shop\services\ContactService;
-use shop\cart\storage\CookieStorage;
+use shop\cart\storage\CombineStorage;
 use shop\cart\cost\calculator\SimpleCost;
 use shop\cart\cost\calculator\DynamicCost;
 use shop\cart\Cart;
@@ -49,9 +49,14 @@ class SetUp implements BootstrapInterface
             ]
         );
 
-        $container->setSingleton(Cart::class, function () {
+        $container->setSingleton(Cart::class, function () use ($app) {
             return new Cart(
-                new CookieStorage('cart', 3600),
+                new CombineStorage(
+                    $app->get('user'),
+                    'cart',
+                    3600 * 24,
+                    $app->get('db')
+                ),
                 new DynamicCost(new SimpleCost())
             );
         });

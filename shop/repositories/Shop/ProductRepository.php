@@ -24,7 +24,21 @@ class ProductRepository
             ->one();
 
         if (!$product) {
-            null;
+            return null;
+        }
+
+        return $product;
+    }
+
+    public function findOneActiveBy($condition): ?Product
+    {
+        $product = Product::find()
+            ->active()
+            ->andWhere($condition)
+            ->one();
+
+        if (!$product) {
+            return null;
         }
 
         return $product;
