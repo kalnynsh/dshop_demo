@@ -81,8 +81,14 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '' => 'site/index',
-                'profile' => 'user/profie/index',
+                'profile' => 'user/profile/index',
                 'POST oauth2/<action:\w+>' => 'oauth2/rest/<action>',
+
+                'GET shop/products/<id:\d+>' => 'shop/product/view',
+                'GET shop/products/category/<id:\d+>' => 'shop/product/category',
+                'GET shop/products/brand/<id:\d+>' => 'shop/product/brand',
+                'GET shop/products/tag/<id:\d+>' => 'shop/product/tag',
+                'GET shop/products' => 'shop/product/index',
             ],
         ],
     ],

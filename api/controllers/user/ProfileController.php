@@ -14,15 +14,19 @@ class ProfileController extends Controller
     private $repository;
     private $yiiApp;
 
-    public function __construct($id, $module, UserRepository $repository, $config = [])
-    {
+    public function __construct(
+        $id,
+        $module,
+        UserRepository $repository,
+        $config = []
+    ) {
         parent::__construct($id, $module, $config);
 
         $this->repository = $repository;
         $this->yiiApp = \Yii::$app;
     }
 
-    public function actionIndex()
+    public function actionIndex(): array
     {
         return $this->serializeUser($this->findCurrentUser());
     }
