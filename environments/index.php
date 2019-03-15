@@ -55,6 +55,27 @@ return [
             'frontend/web/api' => 'api/web',
         ],
     ],
+    'Vagrant' => [
+        'path' => 'devv',
+        'setWritable' => [
+            'common/runtime',
+            'api/runtime',
+            'backend/runtime',
+            'backend/web/assets',
+            'console/runtime',
+            'frontend/runtime',
+            'frontend/web/assets',
+            'static',
+        ],
+        'setExecutable' => [
+            'yii',
+            'yii_test',
+        ],
+        'setCookieValidationKey' => [
+            'common/config/codeception-local.php',
+            'common/config/params-local.php',
+        ],
+    ],
     'Production' => [
         'path' => 'prod',
         'setWritable' => [
