@@ -55,12 +55,12 @@ class CartSerializer
                                 'id' => $item->getId(),
                             ], true),
                         ],
-                        'remove' => [
-                            'href' => Url::to([
-                                'delete',
-                                'id' => $item->getId(),
-                            ], true),
-                        ],
+                        // 'remove' => [
+                        //     'href' => Url::to([
+                        //         'delete',
+                        //         'id' => $item->getId(),
+                        //     ], true),
+                        // ],
                     ],
                 ];
             }, $cart->getItems()),
