@@ -2,7 +2,6 @@
 
 namespace console\controllers;
 
-use yii\httpclient\Exception;
 use yii\console\Controller;
 use shop\services\manage\UserManageService;
 use shop\helpers\UserHelper;
