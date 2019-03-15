@@ -7,10 +7,10 @@ required_plugins.each do |plugin|
 end
 
 domains = {
-  frontend: 'cshop.local',
-  backend:  'backend.cshop.local',
-  api:      'api.cshop.local',
-  static:   'static.cshop.local'
+  frontend: 'dshopv.local',
+  backend:  'backend.dshopv.local',
+  api:      'api.dshopv.local',
+  static:   'static.dshopv.local'
 }
 
 config = {
