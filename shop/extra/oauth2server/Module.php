@@ -14,7 +14,7 @@ use \Yii;
  *     'tokenParamName' => 'accessToken',
  *     'tokenAccessLifetime' => 3600 * 24,
  *     'storageMap' => [
- *         'user_credentials' => 'common\models\User',
+ *         'user_credentials' => 'common\auth\Identity',
  *     ],
  *     'grantTypes' => [
  *         'user_credentials' => [
@@ -58,6 +58,11 @@ class Module extends \yii\base\Module
     public $tokenAccessLifetime;
 
     /**
+     * @var boolean whether to use JWT tokens
+     */
+    public $useJwtToken = false;
+
+    /**
      * @inheritdoc
      */
     public function init()
@@ -74,8 +79,12 @@ class Module extends \yii\base\Module
      */
     public function getServer()
     {
-        if (!$this->has('server')) {
+        if (!$this->has('oauth2server', true)) {
             $storages = [];
+
+            if ($this->useJwtToken) {
+                $this->setJwtTokenKeys();
+            }
 
             foreach (array_keys($this->storageMap) as $name) {
                 $storages[$name] = \Yii::$container->get($name);
@@ -98,29 +107,39 @@ class Module extends \yii\base\Module
                 $grantTypes[$name] = $instance;
             }
 
-            $server = \Yii::$container->get(Server::className(), [
+            $server = \Yii::$container->get(Server::class, [
                 $this,
                 $storages,
-                [
+                array_merge(array_filter([
+                    'use_jwt_access_tokens' => $this->useJwtToken,
                     'token_param_name' => $this->tokenParamName,
                     'access_lifetime' => $this->tokenAccessLifetime,
-                ],
+                ]), $options),
                 $grantTypes,
             ]);
 
-            $this->set('server', $server);
+            $this->set('oauth2server', $server);
         }
-        return $this->get('server');
+
+        return $this->get('oauth2server');
     }
 
     public function getRequest()
     {
-        return Request::createFromGlobals();
+        if (!$this->has('oauth2request', true)) {
+            $this->set('oauth2request', Request::createFromGlobals());
+        }
+
+        return $this->get('oauth2request');
     }
 
     public function getResponse()
     {
-        return new Response();
+        if (!$this->has('oauth2response', true)) {
+            $this->set('oauth2response', new Response());
+        }
+
+        return $this->get('oauth2response');
     }
 
     /**
@@ -132,7 +151,7 @@ class Module extends \yii\base\Module
     {
         if (!isset(Yii::$app->get('i18n')->translations['modules/oauth2/*'])) {
             Yii::$app->get('i18n')->translations['modules/oauth2/*'] = [
-                'class' => PhpMessageSource::className(),
+                'class' => PhpMessageSource::class,
                 'basePath' => __DIR__ . '/messages',
             ];
         }
@@ -150,5 +169,24 @@ class Module extends \yii\base\Module
     public static function t($category, $message, $params = [], $language = null)
     {
         return Yii::t('modules/oauth2/' . $category, $message, $params, $language);
+    }
+
+    private function setJwtTokenKeys(): void
+    {
+        if (!array_key_exists('access_token', $this->storageMap)
+            || !array_key_exists('public_key', $this->storageMap)
+        ) {
+            throw new \yii\base\InvalidConfigException(
+                'access_token and public_key must be set or set useJwtToken to false'
+            );
+        }
+
+        // define dependencies when JWT is used instead of normal token
+        \Yii::$container->clear('public_key');
+        \Yii::$container->set('public_key', $this->strageMap['public_key']);
+        \Yii::$container->set('OAuth\Storage\PublicKeyInterface', $this->strageMap['public_key']);
+
+        \Yii::$container->clear('access_token');
+        \Yii::$container->set('access_token', $this->strageMap['access_token']);
     }
 }
