@@ -27,6 +27,7 @@ return [
         ],
         \shop\extra\oauth2server\Bootstrap::class,
     ],
+    'timeZone' => 'Europe/Moscow',
     'modules' => [
         'oauth2' => [
             'class' => \shop\extra\oauth2server\Module::class,
@@ -71,7 +72,13 @@ return [
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+                    'logVars' => ['_SERVER', '_GET', '_POST'],
+                    'levels' => [
+                        'error',
+                        'warning',
+                        'info',
+                        'trace',
+                    ],
                 ],
             ],
         ],
