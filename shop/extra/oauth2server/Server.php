@@ -7,7 +7,7 @@ class Server extends \OAuth2\Server
     use traits\ClassNamespace;
 
     /**
-     * @var \filsh\yii2\oauth2server\Module
+     * @var shop\extra\oauth2server\Module
      */
     protected $module;
 
@@ -70,5 +70,44 @@ class Server extends \OAuth2\Server
         }
 
         return parent::handleTokenRequest($request, $response);
+    }
+
+    public function handleRevokeRequest(
+        \OAuth2\RequestInterface $request = null,
+        \OAuth2\ResponseInterface $response = null
+    ) {
+        if ($request === null) {
+            $request = $this->module->getRequest();
+        }
+
+        return parent::handleRevokeRequest($request, $response);
+    }
+
+    public function handleAuthorizeRequest(
+        \OAuth2\RequestInterface $request = null,
+        \OAuth2\ResponseInterface $response = null,
+        $isAuthorized = false,
+        $userId = null
+    ) {
+        if ($request === null) {
+            $request = $this->module->getRequest();
+        }
+
+        if ($response === null) {
+            $response = $this->module->getResponse();
+        }
+
+        return parent::handleAuthorizeRequest($request, $response, $isAuthorized, $userId);
+    }
+
+    public function handleUserInfoRequest(
+        \OAuth2\RequestInterface $request = null,
+        \OAuth2\ResponseInterface $response = null
+    ) {
+        if ($request === null) {
+            $request = $this->module->getRequest();
+        }
+
+        return parent::handleUserInfoRequest($request, $response);
     }
 }
