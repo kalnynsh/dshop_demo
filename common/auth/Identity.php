@@ -28,9 +28,11 @@ class Identity implements IdentityInterface, UserCredentialsInterface
 
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        $data = self::getOauth()->getServer()->getResourceController()->getToken();
+        $token = self::getOauth()->getServer()->getResourceController()->getToken();
 
-        return !empty($data['user_id']) ? static::findIdentity($data['user_id']) : null;
+        return !empty($token['user_id'])
+                    ? static::findIdentity($token['user_id'])
+                    : null;
     }
 
     public function getId(): int
