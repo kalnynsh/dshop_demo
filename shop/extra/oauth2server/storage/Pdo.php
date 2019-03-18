@@ -16,13 +16,31 @@ class Pdo extends \OAuth2\Storage\Pdo
     {
         if ($connection === null) {
             if (!empty($this->connection)) {
-                $connection = \Yii::$app->get($this->connection);
+                $db = \Yii::$app->get($this->connection);
 
-                if (!$connection->getIsActive()) {
-                    $connection->open();
+                if (!($db instanceof \yii\db\Connection)) {
+                    throw new
+                    \yii\base\InvalidConfigException(
+                        'Connection component must implement \yii\db\Connection.'
+                    );
                 }
 
-                $connection = $connection->pdo;
+                if (!$db->getIsActive()) {
+                    $db->open();
+                }
+
+                $connection = $db->pdo;
+
+                $config = array_merge(array(
+                    'client_table' => $db->tablePrefix . 'oauth_clients',
+                    'access_token_table' => $db->tablePrefix . 'oauth_access_tokens',
+                    'refresh_token_table' => $db->tablePrefix . 'oauth_refresh_tokens',
+                    'code_table' => $db->tablePrefix . 'oauth_authorization_codes',
+                    'user_table' => $db->tablePrefix . 'oauth_users',
+                    'jwt_table'  => $db->tablePrefix . 'oauth_jwt',
+                    'scope_table'  => $db->tablePrefix . 'oauth_scopes',
+                    'public_key_table'  => $db->tablePrefix . 'oauth_public_keys',
+                ), $config);
             } else {
                 $connection = [
                     'dsn' => $this->dsn,
