@@ -53,7 +53,7 @@ class UserRepository
 
     private function getBy(array $condition): User
     {
-        if (!$user = $this->query->andWhere($condition)->limit(1)->one()) {
+        if (!$user = $this->query->andWhere($condition)->one()) {
             throw new NotFoundException('User not found.');
         }
 
