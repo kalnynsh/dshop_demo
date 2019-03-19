@@ -35,6 +35,8 @@ return [
             'tokenAccessLifetime' => 3600 * 24,
             'storageMap' => [
                 'user_credentials' => \common\auth\Identity::class,
+                'client' => \api\oauth2\repositories\ClientRepository::class,
+                'client_credentials' => \api\oauth2\repositories\ClientRepository::class,
             ],
             'grantTypes' => [
                 'user_credentials' => [
@@ -43,6 +45,10 @@ return [
                 'refresh_token' => [
                     'class' => \OAuth2\GrantType\RefreshToken::class,
                     'always_issue_new_refresh_token' => true,
+                ],
+                'client_credentials' => [
+                    'class' => \OAuth2\GrantType\ClientCredentials::class,
+                    'allow_credentials_in_request_body' => true,
                 ],
             ],
         ],
@@ -76,7 +82,6 @@ return [
                     'levels' => [
                         'error',
                         'warning',
-                        'info',
                         'trace',
                     ],
                 ],

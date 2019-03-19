@@ -61,7 +61,7 @@ class OauthClients extends \yii\db\ActiveRecord
      */
     public function getOauthAccessTokens()
     {
-        return $this->hasMany(OauthAccessTokens::className(), ['client_id' => 'client_id']);
+        return $this->hasMany(OauthAccessTokens::class, ['client_id' => 'client_id']);
     }
 
     /**
@@ -69,7 +69,7 @@ class OauthClients extends \yii\db\ActiveRecord
      */
     public function getOauthAuthorizationCodes()
     {
-        return $this->hasMany(OauthAuthorizationCodes::className(), ['client_id' => 'client_id']);
+        return $this->hasMany(OauthAuthorizationCodes::class, ['client_id' => 'client_id']);
     }
 
     /**
@@ -77,6 +77,6 @@ class OauthClients extends \yii\db\ActiveRecord
      */
     public function getOauthRefreshTokens()
     {
-        return $this->hasMany(OauthRefreshTokens::className(), ['client_id' => 'client_id']);
+        return $this->hasMany(OauthRefreshTokens::class, ['client_id' => 'client_id']);
     }
 }

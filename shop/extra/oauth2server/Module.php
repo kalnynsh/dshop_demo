@@ -30,7 +30,7 @@ use \Yii;
  */
 class Module extends \yii\base\Module
 {
-    const VERSION = '2.0.0';
+    const VERSION = '0.1.0';
 
     /**
      * @var array Model's map
