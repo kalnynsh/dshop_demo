@@ -9,8 +9,8 @@ use shop\readModels\Shop\TagReadRepository;
 use shop\readModels\Shop\ProductReadRepository;
 use shop\readModels\Shop\CategoryReadRepository;
 use shop\readModels\Shop\BrandReadRepository;
-use shop\entities\Shop\Product\Product;
 use api\serializers\ProductSerializer;
+use api\providers\MapDataProvider;
 
 /**
  * ProductController class serving products
@@ -27,6 +27,7 @@ class ProductController extends Controller
     private $categories;
     private $brands;
     private $tags;
+    private $serializers;
 
     public function __construct(
         $id,
@@ -103,6 +104,6 @@ class ProductController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
-        return new MapDataProvider($product, [$this->serializers, 'serializeView']);
+        return $this->serializers->serializeView($product);
     }
 }

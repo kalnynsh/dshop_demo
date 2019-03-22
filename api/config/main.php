@@ -25,29 +25,29 @@ return [
                 'application/xml' => 'xml',
             ],
         ],
-        \shop\extra\oauth2server\Bootstrap::class,
+        shop\extra\oauth2server\Bootstrap::class,
     ],
     'timeZone' => 'Europe/Moscow',
     'modules' => [
         'oauth2' => [
-            'class' => \shop\extra\oauth2server\Module::class,
+            'class' => shop\extra\oauth2server\Module::class,
             'tokenParamName' => 'access_token',
             'tokenAccessLifetime' => 3600 * 24,
             'storageMap' => [
-                'user_credentials' => \common\auth\Identity::class,
-                'client' => \api\oauth2\repositories\ClientRepository::class,
-                'client_credentials' => \api\oauth2\repositories\ClientRepository::class,
+                'user_credentials' => common\auth\Identity::class,
+                'client' => api\oauth2\repositories\ClientRepository::class,
+                'client_credentials' => api\oauth2\repositories\ClientRepository::class,
             ],
             'grantTypes' => [
                 'user_credentials' => [
-                    'class' => \OAuth2\GrantType\UserCredentials::class,
+                    'class' => OAuth2\GrantType\UserCredentials::class,
                 ],
                 'refresh_token' => [
-                    'class' => \OAuth2\GrantType\RefreshToken::class,
+                    'class' => OAuth2\GrantType\RefreshToken::class,
                     'always_issue_new_refresh_token' => true,
                 ],
                 'client_credentials' => [
-                    'class' => \OAuth2\GrantType\ClientCredentials::class,
+                    'class' => OAuth2\GrantType\ClientCredentials::class,
                     'allow_credentials_in_request_body' => true,
                 ],
             ],
@@ -58,6 +58,8 @@ return [
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
             ],
+            'enableCsrfValidation' => false,
+            'enableCookieValidation' => false,
         ],
         'response' => [
             'formatters' => [

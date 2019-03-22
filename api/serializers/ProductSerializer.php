@@ -80,7 +80,7 @@ class ProductSerializer
                         ],
                     ],
                 ],
-                'other' => array_map(function (Category $category) {
+                'other' => array_map(function (Category $category) use($product) {
                     return [
                         'id' => $product->category->id,
                         'name' => $product->category->name,
@@ -104,7 +104,7 @@ class ProductSerializer
                     ],
                 ],
             ],
-            'tags' => aray_map(function (Tag $tag) {
+            'tags' => array_map(function (Tag $tag) {
                 return [
                     'id' => $tag->id,
                     'name' => $tag->name,
