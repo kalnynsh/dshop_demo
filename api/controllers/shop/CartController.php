@@ -9,7 +9,6 @@ use shop\services\Shop\CartService;
 use shop\readModels\Shop\ProductReadRepository;
 use shop\forms\Shop\AddToCartForm;
 use api\serializers\CartSerializer;
-use Yii;
 
 /**
  * CartController class serving cart

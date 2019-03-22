@@ -21,6 +21,7 @@ class WishlistController extends Controller
     private $service;
     private $products;
     private $yiiApp;
+    private $serializer;
 
     public function __construct(
         $id,
