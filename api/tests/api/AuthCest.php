@@ -23,8 +23,8 @@ class AuthCest
             'grant_type' => 'password',
             'username' => 'erau',
             'password' => 'password_0',
-            'cliend_id' => 'testclient',
-            'client_secret' => 'testpass',
+            'cliend_id' => 'testclient1',
+            'client_secret' => 'testpass1',
         ]);
 
         $I->seeResponseCodeIs(200);
@@ -45,8 +45,8 @@ class AuthCest
             'grant_type' => 'password',
             'username' => 'erau',
             'password' => 's;ahg0[ag',
-            'cliend_id' => 'testclient',
-            'client_secret' => 'testpass',
+            'cliend_id' => 'testclient1',
+            'client_secret' => 'testpass1',
         ]);
 
         $I->seeResponseCodeIs(401);

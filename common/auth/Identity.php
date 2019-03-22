@@ -6,7 +6,7 @@ use yii\web\IdentityInterface;
 use shop\repositories\UserRepository;
 use shop\entities\User\User;
 use OAuth2\Storage\UserCredentialsInterface;
-use filsh\yii2\oauth2server\Module;
+use shop\extra\oauth2server\Module;
 
 class Identity implements IdentityInterface, UserCredentialsInterface
 {
