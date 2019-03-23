@@ -9,7 +9,6 @@ use yii\data\ActiveDataProvider;
 use shop\repositories\Shop\CategoryRepository;
 use shop\forms\Shop\Search\SearchForm;
 use shop\entities\Shop\Tag;
-use shop\entities\Shop\Product\queries\ProductQuery;
 use shop\entities\Shop\Product\Value;
 use shop\entities\Shop\Product\Product;
 use shop\entities\Shop\Category;
@@ -203,7 +202,7 @@ class ProductReadRepository
         return Value::find();
     }
 
-    private function getProvider(ProductQuery $query): DataProviderInterface
+    private function getProvider($query): DataProviderInterface
     {
         return new ActiveDataProvider([
             'query' => $query,

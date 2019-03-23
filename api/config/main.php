@@ -104,7 +104,7 @@ return [
                 'GET shop/products/tag/<id:\d+>' => 'shop/product/tag',
                 'GET shop/products' => 'shop/product/index',
                 'shop/products/<id:\d+>/cart' => 'shop/cart/add',
-                'shop/products/<id:\d+>/wish' => 'shop/wishlist/add',
+                'POST shop/products/<id:\d+>/wish' => 'shop/wishlist/add',
 
                 'GET shop/cart' => 'shop/cart/index',
                 'DELETE shop/cart' => 'shop/cart/clear',

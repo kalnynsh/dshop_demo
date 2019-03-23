@@ -41,6 +41,13 @@ class WishlistService
         $this->users->save($user);
     }
 
+    public function haveWishlistItems($userId): bool
+    {
+        $user = $this->getUser($userId);
+
+        return $user->haveWishlistItems();
+    }
+
     private function getUser($userId): User
     {
         return $this->users->get($userId);

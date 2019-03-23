@@ -21,18 +21,18 @@ class WishlistController extends Controller
     private $service;
     private $products;
     private $yiiApp;
-    private $serializer;
+    private $serializers;
 
     public function __construct(
         $id,
         $module,
-        ProductSerializer $serializer,
+        ProductSerializer $serializers,
         WishlistService $service,
         ProductReadRepository $products,
         $config = []
     ) {
         parent::__construct($id, $module, $config);
-        $this->serializer = $serializer;
+        $this->serializers = $serializers;
         $this->service = $service;
         $this->products = $products;
         $this->yiiApp = \Yii::$app;
@@ -47,14 +47,24 @@ class WishlistController extends Controller
         ];
     }
 
-    public function actionIndex(): array
+    public function actionIndex()
     {
         $userId = $this->getUserId();
+
+        if (!$this->service->haveWishlistItems($userId)) {
+            $this->yiiApp->getResponse()->setStatus(200);
+
+            return [
+                'result' => 1,
+                'message' => 'User do not have any product in wishlist',
+            ];
+        }
+
         $dataProvider = $this->products->getWishlist($userId);
 
         return new MapDataProvider(
             $dataProvider,
-            [$this->serialize, 'serializeWishList']
+            [$this->serializers, 'serializeWishList']
         );
     }
 

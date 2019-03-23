@@ -173,6 +173,11 @@ class User extends ActiveRecord
         return $this->hasMany(WishlistItem::class, ['user_id' => 'id']);
     }
 
+    public function haveWishlistItems(): bool
+    {
+        return $this->wishlistItems ? true : false;
+    }
+
     /**
      * @inheritdoc
      */
