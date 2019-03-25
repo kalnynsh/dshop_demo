@@ -103,12 +103,12 @@ return [
                 'GET shop/products/brand/<id:\d+>' => 'shop/product/brand',
                 'GET shop/products/tag/<id:\d+>' => 'shop/product/tag',
                 'GET shop/products' => 'shop/product/index',
-                'shop/products/<id:\d+>/cart' => 'shop/cart/add',
+                'GET shop/products/<id:\d+>/cart' => 'shop/cart/add',
                 'POST shop/products/<id:\d+>/wish' => 'shop/wishlist/add',
 
                 'GET shop/cart' => 'shop/cart/index',
                 'DELETE shop/cart' => 'shop/cart/clear',
-                'shop/cart/checkout' => 'shop/checkout/index',
+                'POST shop/cart/checkout' => 'shop/checkout/index',
                 'PUT shop/cart/<id:\w+>/quantity' => 'shop/cart/quantity',
                 'DELETE shop/cart/<id:\w+>' => 'shop/cart/delete',
 

@@ -7,7 +7,7 @@ use yii\rest\Controller;
 use yii\helpers\Url;
 use shop\services\Shop\OrderService;
 use shop\forms\Shop\Order\OrderForm;
-use Yii;
+use api\helpers\HttpStatusCode;
 
 /**
  * CheckoutController class serving cart checkout
@@ -38,24 +38,26 @@ class CheckoutController extends Controller
         ];
     }
 
-    public function actionIndex(): array
+    public function actionIndex()
     {
         $form = $this->getOrderForm();
-
         $form->load($this->yiiApp->request->getBodyParams(), '');
 
         if ($form->validate()) {
             try {
                 $order = $this->service->checkout($this->yiiApp->user->id, $form);
                 $response = $this->yiiApp->getResponse();
-                $response->setStatusCode(201);
+                $response->setStatusCode(HttpStatusCode::CREATED);
 
                 $response->getHeaders()->set(
                     'Location',
                     Url::to(['shop/order/view', 'id' => $order->id], true)
                 );
 
-                return [];
+                return [
+                    'result' => 1,
+                    'message' => 'The cart was successfully checkout.',
+                ];
             } catch (\DomainException $err) {
                 throw new BadRequestHttpException($err->getMessage(), null, $err);
             }

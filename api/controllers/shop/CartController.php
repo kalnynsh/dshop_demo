@@ -9,6 +9,7 @@ use shop\services\Shop\CartService;
 use shop\readModels\Shop\ProductReadRepository;
 use shop\forms\Shop\AddToCartForm;
 use api\serializers\CartSerializer;
+use api\helpers\HttpStatusCode;
 
 /**
  * CartController class serving cart
@@ -45,7 +46,7 @@ class CartController extends Controller
         return [
             'index' => ['GET'],
             'add' => ['GET'],
-            'quantity' => ['POST'],
+            'quantity' => ['PUT'],
             'delete' => ['DELETE'],
             'clear' => ['DELETE'],
         ];
@@ -76,9 +77,12 @@ class CartController extends Controller
         if ($form->validate()) {
             try {
                 $this->service->add($product->id, $form->modification, $form->quantity);
-                $this->yiiApp->getResponse()->setStatusCode(201);
+                $this->yiiApp->getResponse()->setStatusCode(HttpStatusCode::CREATED);
 
-                return [];
+                return [
+                    'result' => 1,
+                    'message' => 'The product successfully added to cart.',
+                ];
             } catch (\DomainException $err) {
                 throw new BadRequestHttpException($err->getMessage(), null, $err);
             }
@@ -87,30 +91,45 @@ class CartController extends Controller
         return $form;
     }
 
-    public function actionQuantity($id): void
+    public function actionQuantity($id): array
     {
         try {
             $this->service->set($id, (int)$this->yiiApp->request->post('quantity'));
+
+            return [
+                    'result' => 1,
+                    'message' => 'The quantity of cart item successfully was changed.',
+            ];
         } catch (\DomainException $err) {
             throw new BadRequestHttpException($err->getMessage(), null, $err);
         }
     }
 
-    public function actionDelete($id): void
+    public function actionDelete($id): array
     {
         try {
             $this->service->remove($id);
-            $this->yiiApp->getResponse()->setStatusCode(204);
+            $this->yiiApp->getResponse()->setStatusCode(HttpStatusCode::NO_CONTENT);
+
+            return [
+                'result' => 1,
+                'message' => 'The product successfully was removed from cart.',
+            ];
         } catch (\DomainException $err) {
             throw new BadRequestHttpException($err->getMessage(), null, $err);
         }
     }
 
-    public function actionClear(): void
+    public function actionClear(): array
     {
         try {
             $this->service->clear();
-            $this->yiiApp->getResponse()->setStatusCode(204);
+            $this->yiiApp->getResponse()->setStatusCode(HttpStatusCode::NO_CONTENT);
+
+            return [
+                'result' => 1,
+                'message' => 'All products successfully were removed from cart.',
+            ];
         } catch (\DomainException $err) {
             throw new BadRequestHttpException($err->getMessage(), null, $err);
         }

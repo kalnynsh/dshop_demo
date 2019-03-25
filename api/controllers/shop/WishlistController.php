@@ -8,6 +8,7 @@ use shop\services\cabinet\WishlistService;
 use shop\readModels\Shop\ProductReadRepository;
 use api\serializers\ProductSerializer;
 use api\providers\MapDataProvider;
+use api\helpers\HttpStatusCode;
 
 /**
  * WishlistController class
@@ -52,11 +53,11 @@ class WishlistController extends Controller
         $userId = $this->getUserId();
 
         if (!$this->service->haveWishlistItems($userId)) {
-            $this->yiiApp->getResponse()->setStatus(200);
+            $this->yiiApp->getResponse()->setStatus(HttpStatusCode::OK);
 
             return [
                 'result' => 1,
-                'message' => 'User do not have any product in wishlist',
+                'message' => 'User do not have any product in wishlist.',
             ];
         }
 
@@ -68,21 +69,31 @@ class WishlistController extends Controller
         );
     }
 
-    public function actionAdd($id): void
+    public function actionAdd($id): array
     {
         try {
             $this->service->add($this->getUserId(), $id);
-            $this->yiiApp->getResponse()->setStatusCode(201);
+            $this->yiiApp->getResponse()->setStatusCode(HttpStatusCode::CREATED);
+
+            return [
+                'result' => 1,
+                'message' => 'The product successfully added to wishlist.',
+            ];
         } catch (\DomainException $err) {
             throw new BadRequestHttpException($err->getMessage(), null, $err);
         }
     }
 
-    public function actionDelete($id): void
+    public function actionDelete($id): array
     {
         try {
             $this->service->remove($this->getUserId(), $id);
-            $this->yiiApp->getResponse()->setStatusCode(204);
+            $this->yiiApp->getResponse()->setStatusCode(HttpStatusCode::NO_CONTENT);
+
+            return [
+                'result' => 1,
+                'message' => 'The product successfully was removed from wishlist.',
+            ];
         } catch (\DomainException $err) {
             throw new BadRequestHttpException($err->getMessage(), null, $err);
         }

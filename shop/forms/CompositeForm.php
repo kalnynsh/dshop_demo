@@ -86,6 +86,8 @@ abstract class CompositeForm extends Model
                 }
             }
         }
+
+        return false;
     }
 
     public function getFirstErrors(): array
