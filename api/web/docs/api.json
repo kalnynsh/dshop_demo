@@ -2,21 +2,120 @@
     "openapi": "3.0.0",
     "info": {
         "title": "Shop API",
+        "description": "HTTP JSON API",
         "version": "1.0.0"
     },
     "servers": [
         {
-            "url": "dshop.local"
+            "url": "http://api.dshopv.local",
+            "description": "E-shop host"
         }
     ],
     "paths": {
-        "/api/": {
+        "/profile": {},
+        "/api": {
             "get": {
+                "summary": "Home page",
+                "requestBody": {
+                    "content": {
+                        "application/json": {}
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "HTTP JSON API"
                     }
                 }
+            }
+        },
+        "/": {
+            "get": {
+                "tags": [
+                    "Info"
+                ],
+                "summary": "Show api version number",
+                "operationId": "api\\controllers\\SiteController::actionIndex",
+                "responses": {
+                    "200": {
+                        "description": "API version"
+                    }
+                }
+            }
+        },
+        "/user/profile": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "description": "Returns information about current user",
+                "operationId": "api\\controllers\\user\\ProfileController::actionIndex",
+                "responses": {
+                    "200": {
+                        "description": "Success response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user_profile"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": [],
+                        "OAuth2": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ErrorModel": {
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "properties": {
+                    "code": {
+                        "title": "Code",
+                        "description": "The error code",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "message": {
+                        "title": "Message",
+                        "description": "The error description",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "user_profile": {
+                "description": "Current user profile information"
+            }
+        },
+        "securitySchemes": {
+            "password_auth": {
+                "type": "oauth2",
+                "flows": {
+                    "password": {
+                        "authorizationUrl": "http://api.dshopv.local/oauth2/token",
+                        "scopes": {
+                            "read:products": "read products infomation",
+                            "read:cart": "read infomation about products in cart",
+                            "write:cart": "add or remove products to cart",
+                            "read:wishlist": "read infomation about products in wishlist",
+                            "write:wishlist": "add or remove products to wishlist"
+                        }
+                    }
+                }
+            },
+            "Bearer": {
+                "type": "apiKey",
+                "name": "AuthorizationToken",
+                "in": "header"
             }
         }
     }

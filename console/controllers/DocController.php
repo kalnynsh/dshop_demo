@@ -15,16 +15,15 @@ class DocController extends Controller
         $bootstrap = Yii::getAlias('@api/config/params-local.php');
         $format = 'json';
 
-        \passthru(
-            '"'
+        $command = '"'
             . PHP_BINARY
             . '"'
-            . " \"{$openapi}\"
-            --output \"{$target}\"
-            --bootstrap \"{$bootstrap}\"
-            --format \"{$format}\"
-            \"{$source}\";",
-            'Ready, status=0'
-        );
+            . " \"{$openapi}\" "
+            . "--output \"{$target}\" "
+            . "--bootstrap \"{$bootstrap}\" "
+            . "--format \"{$format}\" "
+            . " \"{$source}\"; ";
+
+        \passthru($command);
     }
 }
