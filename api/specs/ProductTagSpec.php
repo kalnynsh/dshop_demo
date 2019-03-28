@@ -6,32 +6,31 @@ use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema(
- *    schema="ProductCategory",
+ *    schema="ProductTag",
  *    type="object",
- *    title="Products category",
- *    description="Products category",
+ *    title="Products tag",
+ *    description="Products tag",
  *    @OA\Property(
  *        title="ID",
- *        description="Category ID",
+ *        description="Tag ID",
  *        property="id",
  *        type="integer",
  *        readOnly="true"
  *    ),
  *    @OA\Property(
  *        title="Name",
- *        description="Category name",
+ *        description="Tag name",
  *        property="name",
  *        type="string"
  *    ),
  *    @OA\Property(
  *        title="Links",
- *        description="Category links",
+ *        description="Tag links",
  *        property="_links",
  *        type="object",
  *        @OA\Property(
  *          ref="#/components/properties/_links"
  *        )
- *    ),
- *    required={"id"}
+ *    )
  * )
  */

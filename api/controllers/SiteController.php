@@ -3,6 +3,7 @@
 namespace api\controllers;
 
 use yii\rest\Controller;
+use OpenApi\Annotations as OA;
 
 /**
  *  @OA\Info(
@@ -21,7 +22,7 @@ use yii\rest\Controller;
  *  @OA\SecurityScheme(
  *   type="oauth2",
  *   name="Authorization",
- *   securityScheme="password_auth",
+ *   securityScheme="OAuth2",
  *      @OA\Flow(
  *          flow="password",
  *          authorizationUrl=API_TOKEN_URL,

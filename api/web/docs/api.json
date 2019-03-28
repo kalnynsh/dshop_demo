@@ -42,6 +42,162 @@
                 }
             }
         },
+        "/shop/products": {
+            "get": {
+                "tags": [
+                    "CatalogProducts"
+                ],
+                "summary": "List all products",
+                "operationId": "actionIndex",
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    },
+                    "default": {
+                        "description": "Unexpected error"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": [],
+                        "OAuth2": []
+                    }
+                ]
+            }
+        },
+        "/shop/products/category/{categoryId}": {
+            "get": {
+                "tags": [
+                    "CatalogProducts"
+                ],
+                "summary": "List products by category",
+                "operationId": "actionCategory",
+                "parameters": [
+                    {
+                        "name": "categoryId",
+                        "in": "path",
+                        "description": "The id of the products category to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    },
+                    "default": {
+                        "description": "Unexpected error"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": [],
+                        "OAuth2": []
+                    }
+                ]
+            }
+        },
+        "/shop/products/brand/{brandId}": {
+            "get": {
+                "tags": [
+                    "CatalogProducts"
+                ],
+                "summary": "List products by brand",
+                "operationId": "actionBrand",
+                "parameters": [
+                    {
+                        "name": "brandId",
+                        "in": "path",
+                        "description": "The id of the products brand to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    },
+                    "default": {
+                        "description": "Unexpected error"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": [],
+                        "OAuth2": []
+                    }
+                ]
+            }
+        },
+        "/shop/products/brand/{tagId}": {
+            "get": {
+                "tags": [
+                    "CatalogProducts"
+                ],
+                "summary": "List products by tag",
+                "operationId": "actionCategory",
+                "parameters": [
+                    {
+                        "name": "tagId",
+                        "in": "path",
+                        "description": "The id of the products tag to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": [],
+                        "OAuth2": []
+                    }
+                ]
+            }
+        },
+        "/shop/products/{productId}": {
+            "get": {
+                "tags": [
+                    "ProductView"
+                ],
+                "summary": "The product data",
+                "operationId": "actionView",
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "ID of product",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    },
+                    "default": {
+                        "description": "Unexpected error"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": [],
+                        "OAuth2": []
+                    }
+                ]
+            }
+        },
         "/user/profile": {
             "get": {
                 "tags": [
@@ -97,7 +253,7 @@
             }
         },
         "securitySchemes": {
-            "password_auth": {
+            "OAuth2": {
                 "type": "oauth2",
                 "flows": {
                     "password": {

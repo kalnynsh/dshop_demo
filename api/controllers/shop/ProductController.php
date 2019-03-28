@@ -58,6 +58,30 @@ class ProductController extends Controller
         ];
     }
 
+    /**
+     * @OA\Get(
+     *    path="/shop/products",
+     *    summary="List all products",
+     *    operationId="actionIndex",
+     *    tags={"CatalogProducts"},
+     *    @OA\Response(
+     *        response=200,
+     *        description="Success response",
+     *        @OA\Schema(
+     *            type="array",
+     *            @OA\Items(ref="#/components/schemas/ProductItem")
+     *       )
+     *   ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Unexpected error",
+     *         @OA\Schema(ref="#/components/schemas/ErrorModel")
+     *     ),
+     *   security={
+     *       {"Bearer": {}, "OAuth2": {}}
+     *   }
+     * )
+     */
     public function actionIndex(): DataProviderInterface
     {
         $dataProvider = $this->products->getAll();
@@ -65,6 +89,43 @@ class ProductController extends Controller
         return new MapDataProvider($dataProvider, [$this->serializers, 'serializeListItem']);
     }
 
+    /**
+     * @OA\Get(
+     *    path="/shop/products/category/{categoryId}",
+     *    summary="List products by category",
+     *    operationId="actionCategory",
+     *    tags={"CatalogProducts"},
+     *    @OA\Parameter(
+     *        name="categoryId",
+     *        in="path",
+     *        required=true,
+     *        description="The id of the products category to retrieve",
+     *        @OA\Schema(
+     *          type="integer"
+     *        )
+     *    ),
+     *    @OA\Response(
+     *        response=200,
+     *        description="Success response",
+     *        @OA\Schema(
+     *            type="array",
+     *            @OA\Items(ref="#/components/schemas/ProductItem")
+     *       )
+     *   ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Unexpected error",
+     *         @OA\Schema(ref="#/components/schemas/ErrorModel")
+     *     ),
+     *   security={
+     *       {"Bearer": {}, "OAuth2": {}}
+     *   }
+     * )
+     *
+     * @param $id
+     * @return DataProviderInterface
+     * @throws NotFoundHttpException
+     */
     public function actionCategory($id): DataProviderInterface
     {
         if (!$category = $this->categories->find($id)) {
@@ -76,6 +137,43 @@ class ProductController extends Controller
         return new MapDataProvider($dataProvider, [$this->serializers, 'serializeListItem']);
     }
 
+    /**
+     * @OA\Get(
+     *    path="/shop/products/brand/{brandId}",
+     *    summary="List products by brand",
+     *    operationId="actionBrand",
+     *    tags={"CatalogProducts"},
+     *    @OA\Parameter(
+     *        name="brandId",
+     *        in="path",
+     *        required=true,
+     *        description="The id of the products brand to retrieve",
+     *        @OA\Schema(
+     *          type="integer"
+     *        )
+     *    ),
+     *    @OA\Response(
+     *        response=200,
+     *        description="Success response",
+     *        @OA\Schema(
+     *            type="array",
+     *            @OA\Items(ref="#/components/schemas/ProductItem")
+     *       )
+     *   ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Unexpected error",
+     *         @OA\Schema(ref="#/components/schemas/ErrorModel")
+     *     ),
+     *   security={
+     *       {"Bearer": {}, "OAuth2": {}}
+     *   }
+     * )
+     *
+     * @param $id
+     * @return DataProviderInterface
+     * @throws NotFoundHttpException
+     */
     public function actionBrand($id): DataProviderInterface
     {
         if (!$brand = $this->brands->find($id)) {
@@ -87,6 +185,38 @@ class ProductController extends Controller
         return new MapDataProvider($dataProvider, [$this->serializers, 'serializeListItem']);
     }
 
+    /**
+     * @OA\Get(
+     *    path="/shop/products/brand/{tagId}",
+     *    summary="List products by tag",
+     *    operationId="actionCategory",
+     *    tags={"CatalogProducts"},
+     *    @OA\Parameter(
+     *        name="tagId",
+     *        in="path",
+     *        required=true,
+     *        description="The id of the products tag to retrieve",
+     *        @OA\Schema(
+     *          type="integer"
+     *        )
+     *    ),
+     *    @OA\Response(
+     *        response=200,
+     *        description="Success response",
+     *        @OA\Schema(
+     *            type="array",
+     *            @OA\Items(ref="#/components/schemas/ProductItem")
+     *       )
+     *   ),
+     *   security={
+     *       {"Bearer": {}, "OAuth2": {}}
+     *   }
+     * )
+     *
+     * @param $id
+     * @return DataProviderInterface
+     * @throws NotFoundHttpException
+     */
     public function actionTag($id): DataProviderInterface
     {
         if (!$tag = $this->tags->find($id)) {
@@ -98,6 +228,38 @@ class ProductController extends Controller
         return new MapDataProvider($dataProvider, [$this->serializers, 'serializeListItem']);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/shop/products/{productId}",
+     *    summary="The product data",
+     *    operationId="actionView",
+     *     tags={"ProductView"},
+     *     @OA\Parameter(
+     *         name="productId",
+     *         description="ID of product",
+     *         in="path",
+     *         required=true,
+     *        @OA\Schema(
+     *          type="integer"
+     *        )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success response",
+     *         @OA\Schema(ref="#/components/schemas/ProductView")
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Unexpected error",
+     *         @OA\Schema(ref="#/components/schemas/ErrorModel")
+     *     ),
+     *     security={{"Bearer": {}, "OAuth2": {}}}
+     * )
+     *
+     * @param $id
+     * @return array
+     * @throws NotFoundHttpException
+     */
     public function actionView($id): array
     {
         if (!$product = $this->products->find($id)) {
