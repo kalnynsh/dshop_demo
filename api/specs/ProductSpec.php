@@ -86,9 +86,11 @@ use OpenApi\Annotations as OA;
 *       ),
 *        @OA\Property(
 *           property="other",
-*           type="array",
-*           @AO\Items(ref="#/components/schemas/ProductCategory")
-*       ),
+*           type="object",
+*           additionalProperties={
+*               ref="#/components/schemas/ProductCategory"
+*           }
+*       )
 *    ),
 *   @OA\Property(
 *     property="brand",
@@ -96,13 +98,17 @@ use OpenApi\Annotations as OA;
 *   ),
 *   @OA\Property(
 *     property="tags",
-*     type="array",
-*     @AO\Items(ref="#/components/schemas/ProductTag")
+*     type="object",
+*     additionalProperties={
+*       ref="#/components/schemas/ProductTag"
+*     }
 *   ),
 *   @OA\Property(
 *     property="photos",
-*     type="array",
-*     @AO\Items(ref="#/components/schemas/ProductPhoto")
+*     type="object",
+*     additionalProperties={
+*       ref="#/components/schemas/ProductPhoto"
+*     }
 *   ),
 *    @OA\Property(
 *        property="_links",
@@ -113,4 +119,39 @@ use OpenApi\Annotations as OA;
 *    ),
 *    required={"id"}
 * )
+*/
+
+/**
+*  @OA\Schema(
+*       title="Modification",
+*       description="Modifications data",
+*       schema="ProductModification",
+*       type="object",
+*       @OA\Property(
+*           property="modification",
+*           type="integer",
+*           required=false
+*       ),
+*       @OA\Property(
+*           property="quantity",
+*           type="integer",
+*           required=true,
+*       ),
+*       example={"modification": 12, "quantity": 3}
+*  )
+*/
+
+/**
+*  @OA\Schema(
+*       title="Quantity",
+*       description="Quantity",
+*       schema="Quantity",
+*       type="object",
+*       @OA\Property(
+*           property="quantity",
+*           type="integer",
+*           required=true,
+*       ),
+*       example={"quantity": 3}
+*  )
 */

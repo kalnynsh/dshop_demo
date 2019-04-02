@@ -10,7 +10,7 @@ class DocController extends Controller
     public function actionBuild(): void
     {
         $openapi = Yii::getAlias('@vendor/bin/openapi');
-        $source = Yii::getAlias('@api/controllers');
+        $source = Yii::getAlias('@api');
         $target = Yii::getAlias('@api/web/docs/api.json');
         $bootstrap = Yii::getAlias('@api/config/params-local.php');
         $format = 'json';

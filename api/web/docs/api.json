@@ -42,6 +42,236 @@
                 }
             }
         },
+        "/shop/cart": {
+            "get": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "List all item of cart",
+                "operationId": "actionIndex",
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    },
+                    "default": {
+                        "description": "Unexpected error"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": [],
+                        "OAuth2": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Cart"
+                ],
+                "operationId": "api\\controllers\\shop\\CartController::actionClear",
+                "responses": {
+                    "204": {
+                        "description": "Success response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": [],
+                        "OAuth2": []
+                    }
+                ]
+            }
+        },
+        "/shop/products/{productId}/cart": {
+            "post": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "Add product to cart",
+                "operationId": "actionAdd",
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "The id of the product to be added",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "modification",
+                        "in": "formData",
+                        "description": "The id of modification to be added",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Modification data",
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProductModification"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": [],
+                        "OAuth2": []
+                    }
+                ]
+            }
+        },
+        "/shop/cart/{id}/quantity": {
+            "put": {
+                "tags": [
+                    "Cart"
+                ],
+                "operationId": "api\\controllers\\shop\\CartController::actionQuantity",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the product to be changed quantity",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Quantity",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Quantity"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": [],
+                        "OAuth2": []
+                    }
+                ]
+            }
+        },
+        "/shop/cart/{id}": {
+            "delete": {
+                "tags": [
+                    "Cart"
+                ],
+                "operationId": "api\\controllers\\shop\\CartController::actionDelete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the product to be deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": [],
+                        "OAuth2": []
+                    }
+                ]
+            }
+        },
         "/shop/products": {
             "get": {
                 "tags": [
@@ -228,6 +458,9 @@
     },
     "components": {
         "schemas": {
+            "user_profile": {
+                "description": "Current user profile information"
+            },
             "ErrorModel": {
                 "required": [
                     "code",
@@ -248,8 +481,328 @@
                 },
                 "type": "object"
             },
-            "user_profile": {
-                "description": "Current user profile information"
+            "Cart": {
+                "title": "Cart",
+                "description": "Customer cart",
+                "properties": {
+                    "weight": {
+                        "type": "integer"
+                    },
+                    "amount": {
+                        "type": "integer"
+                    },
+                    "items": {
+                        "title": "Items",
+                        "description": "List of cart items",
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                "quantity": {
+                                    "type": "integer"
+                                },
+                                "price": {
+                                    "type": "integer"
+                                },
+                                "cost": {
+                                    "type": "integer"
+                                },
+                                "product": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "code": {
+                                            "type": "string"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "thumbnail": {
+                                            "type": "string"
+                                        },
+                                        "_links": {
+                                            "type": "object",
+                                            "$ref": "#/components/properties/_links"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "modification": {
+                                    "description": "Modification of product",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "code": {
+                                            "type": "string"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "_links": {
+                                            "properties": {
+                                                "quantity": {
+                                                    "properties": {
+                                                        "href": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "cost": {
+                        "properties": {
+                            "origin": {
+                                "type": "integer"
+                            },
+                            "discounts": {
+                                "type": "array",
+                                "items": {
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "total": {
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "_links": {
+                        "properties": {
+                            "self": {
+                                "properties": {
+                                    "href": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "ProductBrand": {
+                "title": "Products brand",
+                "description": "Products brand",
+                "required": [
+                    "id"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "Brand ID",
+                        "type": "integer",
+                        "readOnly": "true"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Brand name",
+                        "type": "string"
+                    },
+                    "_links": {
+                        "title": "Links",
+                        "description": "Brand links",
+                        "properties": {
+                            "": {
+                                "$ref": "#/components/properties/_links"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "ProductCategory": {
+                "title": "Products category",
+                "description": "Products category",
+                "required": [
+                    "id"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "Category ID",
+                        "type": "integer",
+                        "readOnly": "true"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Category name",
+                        "type": "string"
+                    },
+                    "_links": {
+                        "title": "Links",
+                        "description": "Category links",
+                        "properties": {
+                            "": {
+                                "$ref": "#/components/properties/_links"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "ProductPhoto": {
+                "title": "Photo",
+                "description": "Products photo",
+                "properties": {
+                    "thumbnail": {
+                        "title": "Thumbnail",
+                        "description": "Photos thumbnail",
+                        "type": "string"
+                    },
+                    "origin": {
+                        "title": "Origin",
+                        "description": "Origin photo",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ProductPrice": {
+                "title": "Price",
+                "description": "Product price",
+                "properties": {
+                    "new": {
+                        "title": "New",
+                        "description": "Price is new",
+                        "type": "integer"
+                    },
+                    "old": {
+                        "title": "Old",
+                        "description": "Price is old",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "ProductItem": {
+                "required": [
+                    "id"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "Products ID",
+                        "type": "integer",
+                        "readOnly": "true"
+                    },
+                    "code": {
+                        "title": "Code",
+                        "description": "Products code",
+                        "type": "string"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Products name",
+                        "type": "string"
+                    },
+                    "category": {
+                        "$ref": "#/components/schemas/ProductCategory"
+                    },
+                    "brand": {
+                        "$ref": "#/components/schemas/ProductBrand"
+                    },
+                    "price": {
+                        "$ref": "#/components/schemas/ProductPrice"
+                    },
+                    "thumbnail": {
+                        "type": "string"
+                    },
+                    "_links": {
+                        "properties": {
+                            "": {
+                                "$ref": "#/components/properties/_links"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "ProductModification": {
+                "title": "Modification",
+                "description": "Modifications data",
+                "properties": {
+                    "modification": {
+                        "required": false,
+                        "type": "integer"
+                    },
+                    "quantity": {
+                        "required": true,
+                        "type": "integer"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "modification": 12,
+                    "quantity": 3
+                }
+            },
+            "Quantity": {
+                "title": "Quantity",
+                "description": "Quantity",
+                "properties": {
+                    "quantity": {
+                        "required": true,
+                        "type": "integer"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "quantity": 3
+                }
+            },
+            "ProductTag": {
+                "title": "Products tag",
+                "description": "Products tag",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "Tag ID",
+                        "type": "integer",
+                        "readOnly": "true"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Tag name",
+                        "type": "string"
+                    },
+                    "_links": {
+                        "title": "Links",
+                        "description": "Tag links",
+                        "properties": {
+                            "": {
+                                "$ref": "#/components/properties/_links"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
             }
         },
         "securitySchemes": {

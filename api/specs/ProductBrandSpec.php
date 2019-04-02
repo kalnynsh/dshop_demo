@@ -2,6 +2,8 @@
 
 namespace api\specs;
 
+use OpenApi\Annotations as OA;
+
 /**
  * @OA\Schema(
  *    schema="ProductBrand",

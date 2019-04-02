@@ -9,6 +9,7 @@ use shop\readModels\Shop\ProductReadRepository;
 use api\serializers\ProductSerializer;
 use api\providers\MapDataProvider;
 use api\helpers\HttpStatusCode;
+use OpenApi\Annotations as OA;
 
 /**
  * WishlistController class

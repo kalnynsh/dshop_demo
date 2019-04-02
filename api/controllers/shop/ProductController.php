@@ -11,6 +11,7 @@ use shop\readModels\Shop\CategoryReadRepository;
 use shop\readModels\Shop\BrandReadRepository;
 use api\serializers\ProductSerializer;
 use api\providers\MapDataProvider;
+use OpenApi\Annotations as OA;
 
 /**
  * ProductController class serving products
