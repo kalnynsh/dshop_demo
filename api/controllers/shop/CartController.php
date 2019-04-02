@@ -45,7 +45,7 @@ class CartController extends Controller
     {
         return [
             'index' => ['GET'],
-            'add' => ['GET'],
+            'add' => ['POST'],
             'quantity' => ['PUT'],
             'delete' => ['DELETE'],
             'clear' => ['DELETE'],
