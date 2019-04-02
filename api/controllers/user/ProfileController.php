@@ -9,14 +9,7 @@ use shop\entities\User\User;
 use api\helpers\DateHelper;
 
 /**
- * @OA\PathItem(
- *  path="/profile"
- * )
- *
- * @OA\Schema(
- *  schema="user_profile",
- *  description="Current user profile information"
- * )
+ * ProfileController - serve users data
  */
 class ProfileController extends Controller
 {
@@ -37,19 +30,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *  tags={"Profile"},
-     *  path="/user/profile",
-     *  description="Returns information about current user",
-     *  @OA\Response(
-     *      response=200,
-     *      description="Success response",
-     *      @OA\JsonContent(ref="#/components/schemas/user_profile")
-     *  ),
-     *  security={
-     *      {"Bearer": {}, "OAuth2": {}}
-     *  }
-     * )
+     * @return array
      */
     public function actionIndex(): array
     {
@@ -63,6 +44,9 @@ class ProfileController extends Controller
         ];
     }
 
+    /**
+     * @return User|null
+     */
     public function findCurrentUser(): ?User
     {
         $id = $this->yiiApp->user->id;
@@ -70,6 +54,9 @@ class ProfileController extends Controller
         return $this->repository->findOne($id);
     }
 
+    /**
+     * @return array
+     */
     private function serializeUser(User $user): array
     {
         return [
