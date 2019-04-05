@@ -20,6 +20,12 @@ return [
         'reset/<_a:[\w-]+>' => 'auth/reset/<_a>',
         'network/<_a:[\w-]+>' => 'auth/network/<_a>',
 
+        [
+            'pattern' => 'yandex-market',
+            'route' => 'market/index',
+            'suffix' => '.xml',
+        ],
+
         'blog' => 'blog/post/index',
         'blog/tag/<slug:[\w\-]+>' => 'blog/post/tag',
         'blog/<id:\d+>' => 'blog/post/post',

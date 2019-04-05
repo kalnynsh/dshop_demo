@@ -53,6 +53,12 @@ class Delivery extends ActiveRecord
         $this->sort = $sort;
     }
 
+    public function isAvailableForWeight($weight): bool
+    {
+        return (!$this->min_weight || $this->min_weight <= $weight)
+                && (!$this->max_weight || $this->max_weight >= $weight);
+    }
+
     public static function tableName(): string
     {
         return '{{%shop_deliveries}}';

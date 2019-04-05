@@ -6,18 +6,9 @@ use yii\helpers\ArrayHelper;
 use yii\db\ActiveQuery;
 use shop\readModels\Shop\views\CategoryView;
 use shop\entities\Shop\Category;
-// use Elasticsearch\Client;
 
 class CategoryReadRepository
 {
-    /** @property Client $client */
-    // private $client;
-
-    // public function __construct(Client $client)
-    // {
-    //     $this->client = $client;
-    // }
-
     public function getRoot(): Category
     {
         return $this->query()->roots()->one();

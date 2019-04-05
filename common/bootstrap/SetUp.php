@@ -12,6 +12,8 @@ use shop\cart\cost\calculator\SimpleCost;
 use shop\cart\cost\calculator\DynamicCost;
 use shop\cart\Cart;
 use yii\rbac\ManagerInterface;
+use shop\services\yandex\YandexMarket;
+use shop\services\yandex\ShopInfo;
 
 class SetUp implements BootstrapInterface
 {
@@ -60,5 +62,13 @@ class SetUp implements BootstrapInterface
                 new DynamicCost(new SimpleCost())
             );
         });
+
+        $container->setSingleton(YandexMarket::class, [], [
+            new ShopInfo(
+                $app->name,
+                $app->name,
+                $app->params['frontendHostInfo']
+            ),
+        ]);
     }
 }

@@ -94,6 +94,13 @@ class ProductReadRepository
             ->all();
     }
 
+    public function getAllIterator(): iterable
+    {
+        return $this->getActiveProductQuery()
+                    ->with(['mainPhoto', 'brand'])
+                    ->each();
+    }
+
     public function find($id): ?Product
     {
         return Product::find()->active()->andWhere(['id' => $id])->one();
