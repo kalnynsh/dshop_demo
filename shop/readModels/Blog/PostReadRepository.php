@@ -71,6 +71,21 @@ class PostReadRepository
         return $this->pQuery->active()->andWhere(['id' => $id])->one();
     }
 
+    public function count(): int
+    {
+        return $this->pQuery->active()->count();
+    }
+
+    public function getAllByRange(int $offset, int $limit): array
+    {
+        return $this
+            ->pQuery
+            ->orderBy(['id' => SORT_ASC])
+            ->limit($limit)
+            ->offset($offset)
+            ->all();
+    }
+
     private function getProvider(ActiveQuery $query): ActiveDataProvider
     {
         return new ActiveDataProvider([

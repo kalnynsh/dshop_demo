@@ -23,6 +23,11 @@ class PageReadRepository
             ->one();
     }
 
+    public function getAll(): array
+    {
+        return $this->query()->andWhere(['>', 'depth', 0])->all();
+    }
+
     private function query(): PageQuery
     {
         return Page::find();

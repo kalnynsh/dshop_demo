@@ -199,6 +199,21 @@ class ProductReadRepository
         ]);
     }
 
+    public function count(): int
+    {
+        return $this->getActiveProductQuery()->count();
+    }
+
+    public function getAllByRange(int $offset, int $limit): array
+    {
+        return $this
+            ->getActiveProductQuery()
+            ->orderBy(['id' => SORT_ASC])
+            ->limit($limit)
+            ->offset($offset)
+            ->all();
+    }
+
     private function findCategory($catId): ?Category
     {
         return (new CategoryRepository())->find($catId);
