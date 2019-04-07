@@ -3,12 +3,13 @@
 namespace shop\services\auth;
 
 use yii\mail\MailerInterface;
+use shop\services\newsletter\MailNewsletter;
 use shop\services\manage\access\RoleManagerService;
 use shop\services\manage\access\Rbac;
+use shop\services\TransactionManager;
 use shop\repositories\UserRepository;
 use shop\forms\auth\SignupForm;
 use shop\entities\User\User;
-use shop\services\TransactionManager;
 
 /**
  * Signup new user
@@ -25,18 +26,21 @@ class SignupService
     private $users;
     private $roles;
     private $transaction;
+    private $newsletter;
     private $yiiApp;
 
     public function __construct(
         UserRepository $users,
         MailerInterface $mailer,
         RoleManagerService $roles,
-        TransactionManager $transaction
+        TransactionManager $transaction,
+        MailNewsletter $newsletter
     ) {
         $this->mailer = $mailer;
         $this->users = $users;
         $this->roles = $roles;
         $this->transaction = $transaction;
+        $this->newsletter = $newsletter;
         $this->yiiApp = \Yii::$app;
     }
 
@@ -79,5 +83,6 @@ class SignupService
         $user = $this->users->getByEmailConfirmToken($token);
         $user->confirmSignup();
         $this->users->save($user);
+        $this->newsletter->subscribe($user->email);
     }
 }

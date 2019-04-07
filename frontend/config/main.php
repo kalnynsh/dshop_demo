@@ -20,6 +20,7 @@ return [
     ],
     'language' => 'ru-RU',
     'layout' => 'blank',
+    'name' => 'D`shop',
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         'request' => [

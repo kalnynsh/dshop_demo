@@ -2,18 +2,20 @@
 
 namespace common\bootstrap;
 
+use yii\rbac\ManagerInterface;
 use yii\mail\MailerInterface;
 use yii\di\Instance;
 use yii\caching\Cache;
 use yii\base\BootstrapInterface;
+use shop\services\yandex\YandexMarket;
+use shop\services\yandex\ShopInfo;
+use shop\services\newsletter\MailNewsletter;
 use shop\services\ContactService;
 use shop\cart\storage\CombineStorage;
 use shop\cart\cost\calculator\SimpleCost;
 use shop\cart\cost\calculator\DynamicCost;
 use shop\cart\Cart;
-use yii\rbac\ManagerInterface;
-use shop\services\yandex\YandexMarket;
-use shop\services\yandex\ShopInfo;
+use DrewM\MailChimp\MailChimp;
 
 class SetUp implements BootstrapInterface
 {
@@ -70,5 +72,15 @@ class SetUp implements BootstrapInterface
                 $app->params['frontendHostInfo']
             ),
         ]);
+
+        $container->setSingleton(
+            MailNewsletter::class,
+            function () use ($app) {
+                return new MailNewsletter(
+                    new MailChimp($app->params['mailChimpKey']),
+                    $app->params['mailChimpListId']
+                );
+            }
+        );
     }
 }

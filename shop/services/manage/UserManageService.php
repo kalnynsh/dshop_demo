@@ -2,8 +2,9 @@
 
 namespace shop\services\manage;
 
-use shop\services\manage\access\Rbac;
+use shop\services\newsletter\MailNewsletter;
 use shop\services\manage\access\RoleManagerService;
+use shop\services\manage\access\Rbac;
 use shop\services\TransactionManager;
 use shop\repositories\UserRepository;
 use shop\forms\manage\User\UserEditForm;
@@ -22,15 +23,18 @@ class UserManageService
     private $repository;
     private $roles;
     private $transaction;
+    private $newsletter;
 
     public function __construct(
         UserRepository $repository,
         RoleManagerService $roles,
-        TransactionManager $transaction
+        TransactionManager $transaction,
+        MailNewsletter $newsletter
     ) {
         $this->repository = $repository;
         $this->roles = $roles;
         $this->transaction = $transaction;
+        $this->newsletter = $newsletter;
     }
 
     public function create(UserCreateForm $form): User
@@ -44,6 +48,7 @@ class UserManageService
         $this->transaction->wrap(function () use ($user) {
             $this->repository->save($user);
             $this->roles->assing($user->id, Rbac::ROLE_USER);
+            $this->newsletter->subscribe($user->email);
         });
 
         return $user;
@@ -73,6 +78,7 @@ class UserManageService
     public function remove($id): void
     {
         $user = $this->repository->get($id);
+        $this->newsletter->unsubscribe($user->email);
         $this->repository->remove($user);
     }
 
