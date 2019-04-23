@@ -9,6 +9,7 @@ return [
         'created_at' => '1391885313',
         'updated_at' => '1391885313',
         'email' => 'alex.runner@rutherford.com',
+        'phone' => '79056812347'
     ],
     [
         'username' => 'golem.beired',
@@ -18,6 +19,7 @@ return [
         'created_at' => '1391885313',
         'updated_at' => '1391885313',
         'email' => 'golem.beired@hotmail.com',
+        'phone' => '79035119347',
         'status' => '0',
     ],
 ];

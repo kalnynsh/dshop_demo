@@ -22,6 +22,7 @@ use Yii;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ * @property string $phone
  *
  * @property Network[] $networks
  * @property WishlistItem[] $wishlistItems
@@ -34,11 +35,13 @@ class User extends ActiveRecord
     public static function create(
         string $username,
         string $email,
+        string $phone,
         string $password
     ): self {
         $user = new User();
         $user->username = $username;
         $user->email = $email;
+        $user->phone = $phone;
         $user->setPassword(!empty($password) ? $password : Yii::$app->security->generateRandomString());
         $user->created_at = time();
         $user->status = self::STATUS_ACTIVE;
@@ -47,21 +50,24 @@ class User extends ActiveRecord
         return $user;
     }
 
-    public function edit(string $username, string $email): void
+    public function edit(string $username, string $email, string $phone): void
     {
         $this->username = $username;
         $this->email = $email;
+        $this->phone = $phone;
         $this->updated_at = time();
     }
 
     public static function requestSignup(
         string $username,
         string $email,
+        string $phone,
         string $password
     ): self {
         $user = new User();
         $user->username = $username;
         $user->email = $email;
+        $user->phone = $phone;
         $user->setPassword($password);
         $user->created_at = time();
         $user->status = self::STATUS_WAIT;

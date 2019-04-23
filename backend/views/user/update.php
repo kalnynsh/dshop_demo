@@ -35,6 +35,10 @@ $this->params['breadcrumbs'][] = 'Обновление';
         ?>
 
         <?=
+            $form->field($model, 'phone')->textInput(['maxLength' => true]);
+        ?>
+
+        <?=
             $form->field($model, 'role')->dropDownList($model->rolesList());
         ?>
 

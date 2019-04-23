@@ -23,6 +23,10 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
 
         <?=
+            $form->field($model, 'phone')->textInput(['maxLength' => true]);
+        ?>
+
+        <?=
             $form->field($model, 'password')
                 ->passwordInput(['maxLength' => true]);
         ?>

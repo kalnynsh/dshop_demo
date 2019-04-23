@@ -42,12 +42,13 @@ class UserManageService
         $user = User::create(
             $form->username,
             $form->email,
+            $form->phone,
             $form->password
         );
 
         $this->transaction->wrap(function () use ($user) {
             $this->repository->save($user);
-            $this->roles->assing($user->id, Rbac::ROLE_USER);
+            $this->roles->assign($user->id, Rbac::ROLE_USER);
             $this->newsletter->subscribe($user->email);
         });
 
@@ -60,7 +61,8 @@ class UserManageService
 
         $user->edit(
             $form->username,
-            $form->email
+            $form->email,
+            $form->phone
         );
 
         $this->transaction->wrap(function () use ($user, $form) {
