@@ -17,6 +17,7 @@ use shop\cart\cost\calculator\SimpleCost;
 use shop\cart\cost\calculator\DynamicCost;
 use shop\cart\Cart;
 use DrewM\MailChimp\MailChimp;
+use shop\services\sms\LoggedSmsSender;
 
 class SetUp implements BootstrapInterface
 {
@@ -84,8 +85,14 @@ class SetUp implements BootstrapInterface
             }
         );
 
-        $container->setSingleton(SmsRu::class, [
-            $app->params['smsRuKey'],
-        ]);
+        $container->setSingleton(
+            LoggedSmsSender::class,
+            function () use ($app) {
+                return new LoggedSmsSender(
+                    new SmsRu($app->params['smsRuKey']),
+                    \Yii::getLogger()
+                );
+            }
+        );
     }
 }
