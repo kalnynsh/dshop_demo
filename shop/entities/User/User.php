@@ -58,6 +58,13 @@ class User extends ActiveRecord
         $this->updated_at = time();
     }
 
+    public function editProfile(string $email, string $phone): void
+    {
+        $this->email = $email;
+        $this->phone = $phone;
+        $this->updated_at = time();
+    }
+
     public static function requestSignup(
         string $username,
         string $email,
@@ -295,6 +302,7 @@ class User extends ActiveRecord
             'id' => 'ID',
             'username' => 'Имя',
             'email' => 'Электронная почта',
+            'phone' => 'Телефон',
             'status' => 'Статус',
             'role' => 'Роль',
             'created_at' => 'Создан',

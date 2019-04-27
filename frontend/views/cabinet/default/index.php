@@ -17,4 +17,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= AuthChoice::widget([
         'baseAuthUrl' => ['cabinet/network/attach'],
     ]); ?>
+
+    <p>
+        <?= Html::a(
+            'Редактирование профиля',
+            ['cabinet/profile/edit'],
+            ['class' => 'btn btn-primary']
+        ) ?>
+    </p>
 </div>
