@@ -103,12 +103,12 @@ class SetUp implements BootstrapInterface
         );
 
         $container->setSingleton(IEventDispatcher::class, function (Container $container) {
-            return new SimpleEventDispatcher([
+            return new SimpleEventDispatcher($container, [
                 UserSignUpRequested::class => [
-                    [$container->get(UserSignupRequestedListener::class), 'handle'],
+                    [UserSignupRequestedListener::class],
                 ],
                 UserSignUpConfirmed::class => [
-                    [$container->get(UserSignupConfirmedListener::class), 'handle'],
+                    [UserSignupConfirmedListener::class],
                 ]
             ]);
         } );
