@@ -9,6 +9,7 @@ use yii\caching\Cache;
 use yii\base\BootstrapInterface;
 use shop\services\yandex\YandexMarket;
 use shop\services\yandex\ShopInfo;
+use shop\services\sms\SmsRu;
 use shop\services\newsletter\MailNewsletter;
 use shop\services\ContactService;
 use shop\cart\storage\CombineStorage;
@@ -82,5 +83,9 @@ class SetUp implements BootstrapInterface
                 );
             }
         );
+
+        $container->setSingleton(SmsRu::class, [
+            $app->params['smsRuKey'],
+        ]);
     }
 }
