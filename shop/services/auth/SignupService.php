@@ -2,46 +2,44 @@
 
 namespace shop\services\auth;
 
-use yii\mail\MailerInterface;
-use shop\services\newsletter\MailNewsletter;
 use shop\services\manage\access\RoleManagerService;
 use shop\services\manage\access\Rbac;
+use shop\services\auth\events\UserSignUpRequested;
+use shop\services\auth\events\UserSignUpConfirmed;
 use shop\services\TransactionManager;
 use shop\repositories\UserRepository;
 use shop\forms\auth\SignupForm;
 use shop\entities\User\User;
+use shop\dispatchers\IEventDispatcher;
 
 /**
  * Signup new user
  *
  * @property UserRepository $users
- * @property MailerInterface $mailer
  * @property RoleManagerService $roles
  * @property TransactionManager $transaction
- * @property Componant $yiiApp
+ * @property Component $yiiApp
+ * @property IEventDispatcher $dispatcher
  */
 class SignupService
 {
-    private $mailer;
     private $users;
     private $roles;
     private $transaction;
-    private $newsletter;
     private $yiiApp;
+    private $dispatcher;
 
     public function __construct(
         UserRepository $users,
-        MailerInterface $mailer,
         RoleManagerService $roles,
         TransactionManager $transaction,
-        MailNewsletter $newsletter
+        IEventDispatcher $dispatcher
     ) {
-        $this->mailer = $mailer;
         $this->users = $users;
         $this->roles = $roles;
         $this->transaction = $transaction;
-        $this->newsletter = $newsletter;
         $this->yiiApp = \Yii::$app;
+        $this->dispatcher = $dispatcher;
     }
 
     public function signup(SignupForm $form): void
@@ -58,21 +56,7 @@ class SignupService
             $this->roles->assign($user->id, Rbac::ROLE_USER);
         });
 
-        $sent = $this->mailer
-            ->compose(
-                [
-                    'html' => 'auth/signup/confirm-html',
-                    'text' => 'auth/signup/confirm-text'
-                ],
-                ['user' => $user]
-            )
-            ->setTo($form->email)
-            ->setSubject('Signup confirm for ' . $this->yiiApp->name)
-            ->send();
-
-        if (!$sent) {
-            throw new \RuntimeException('Email sending error.');
-        }
+        $this->dispatcher->dispatch(new UserSignUpRequested($user));
     }
 
     public function confirm($token): void
@@ -84,6 +68,6 @@ class SignupService
         $user = $this->users->getByEmailConfirmToken($token);
         $user->confirmSignup();
         $this->users->save($user);
-        $this->newsletter->subscribe($user->email);
+        $this->dispatcher->dispatch(new UserSignUpConfirmed($user));
     }
 }
