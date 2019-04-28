@@ -2,7 +2,7 @@
 
 namespace shop\listeners\User;
 
-use shop\services\auth\events\UserSignupRequested;
+use shop\entities\User\events\UserSignUpRequested;
 use yii\mail\MailerInterface;
 
 class UserSignupRequestedListener
@@ -14,7 +14,7 @@ class UserSignupRequestedListener
         $this->mailer = $mailer;
     }
 
-    public function handle(UserSignupRequested $event): void
+    public function handle(UserSignUpRequested $event): void
     {
         $sent = $this
             ->mailer

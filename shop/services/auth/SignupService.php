@@ -4,8 +4,6 @@ namespace shop\services\auth;
 
 use shop\services\manage\access\RoleManagerService;
 use shop\services\manage\access\Rbac;
-use shop\services\auth\events\UserSignUpRequested;
-use shop\services\auth\events\UserSignUpConfirmed;
 use shop\services\TransactionManager;
 use shop\repositories\UserRepository;
 use shop\forms\auth\SignupForm;
@@ -56,7 +54,7 @@ class SignupService
             $this->roles->assign($user->id, Rbac::ROLE_USER);
         });
 
-        $this->dispatcher->dispatch(new UserSignUpRequested($user));
+        $this->dispatcher->dispatchAll($user->releaseEvents());
     }
 
     public function confirm($token): void
@@ -68,6 +66,6 @@ class SignupService
         $user = $this->users->getByEmailConfirmToken($token);
         $user->confirmSignup();
         $this->users->save($user);
-        $this->dispatcher->dispatch(new UserSignUpConfirmed($user));
+        $this->dispatcher->dispatchAll($user->releaseEvents());
     }
 }

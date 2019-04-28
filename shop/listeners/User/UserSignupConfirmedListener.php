@@ -3,7 +3,7 @@
 namespace shop\listeners\User;
 
 use shop\services\newsletter\MailNewsletter;
-use shop\services\auth\events\UserSignUpConfirmed;
+use shop\entities\User\events\UserSignUpConfirmed;
 
 class UserSignupConfirmedListener
 {

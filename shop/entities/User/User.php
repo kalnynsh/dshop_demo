@@ -5,6 +5,10 @@ namespace shop\entities\User;
 use yii\db\ActiveRecord;
 use yii\db\ActiveQuery;
 use yii\behaviors\TimestampBehavior;
+use shop\entities\traits\EventTrait;
+use shop\entities\aggregators\AggregateRoot;
+use shop\entities\User\events\UserSignUpRequested;
+use shop\entities\User\events\UserSignUpConfirmed;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use Yii;
 
@@ -26,9 +30,12 @@ use Yii;
  *
  * @property Network[] $networks
  * @property WishlistItem[] $wishlistItems
+ * @property array $events
  */
-class User extends ActiveRecord
+class User extends ActiveRecord implements AggregateRoot
 {
+    use EventTrait;
+
     const STATUS_WAIT = 0;
     const STATUS_ACTIVE = 10;
 
@@ -74,12 +81,16 @@ class User extends ActiveRecord
         $user = new User();
         $user->username = $username;
         $user->email = $email;
+
         $user->phone = $phone;
         $user->setPassword($password);
         $user->created_at = time();
+
         $user->status = self::STATUS_WAIT;
         $user->email_confirm_token = Yii::$app->security->generateRandomString();
         $user->generateAuthKey();
+
+        $user->recordEvent(new UserSignUpRequested($user));
 
         return $user;
     }
@@ -89,8 +100,10 @@ class User extends ActiveRecord
         if (!$this->isWait()) {
             throw new \DomainException('User is already active.');
         }
+
         $this->status = self::STATUS_ACTIVE;
         $this->email_confirm_token = null;
+        $this->recordEvent(new UserSignUpConfirmed($this));
     }
 
     public static function signupByNetwork($network, $identity): self
@@ -150,7 +163,10 @@ class User extends ActiveRecord
 
     public function requestPasswordReset(): void
     {
-        if (!empty($this->password_reset_token) && self::isPasswordResetTokenValid($this->password_reset_token)) {
+        if (
+            !empty($this->password_reset_token)
+            && self::isPasswordResetTokenValid($this->password_reset_token)
+        ) {
             throw new \DomainException('Password resetting is already requested.');
         }
         $this->password_reset_token
