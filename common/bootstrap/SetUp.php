@@ -28,6 +28,8 @@ use shop\cart\cost\calculator\SimpleCost;
 use shop\cart\cost\calculator\DynamicCost;
 use shop\cart\Cart;
 use DrewM\MailChimp\MailChimp;
+use yii\console\ErrorHandler;
+use yii\queue\Queue;
 
 class SetUp implements BootstrapInterface
 {
@@ -48,6 +50,19 @@ class SetUp implements BootstrapInterface
                 return $app->mailer;
             }
         );
+
+        $container->setSingleton(ErrorHandler::class, function () use ($app) {
+            return $app->errorHandler;
+        });
+
+        $container->setSingleton(Queue::class, function () use ($app) {
+            return $app->get('queue');
+        });
+
+
+        $container->setSingleton(Cache::class, function () use ($app) {
+            return $app->cache;
+        });
 
         $container->setSingleton(
             ManagerInterface::class,
