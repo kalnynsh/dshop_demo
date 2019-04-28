@@ -8,7 +8,6 @@ use shop\services\TransactionManager;
 use shop\repositories\UserRepository;
 use shop\forms\auth\SignupForm;
 use shop\entities\User\User;
-use shop\dispatchers\IEventDispatcher;
 
 /**
  * Signup new user
