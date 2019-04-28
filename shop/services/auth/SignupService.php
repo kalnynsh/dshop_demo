@@ -17,7 +17,6 @@ use shop\dispatchers\IEventDispatcher;
  * @property RoleManagerService $roles
  * @property TransactionManager $transaction
  * @property Component $yiiApp
- * @property IEventDispatcher $dispatcher
  */
 class SignupService
 {
@@ -25,19 +24,16 @@ class SignupService
     private $roles;
     private $transaction;
     private $yiiApp;
-    private $dispatcher;
 
     public function __construct(
         UserRepository $users,
         RoleManagerService $roles,
-        TransactionManager $transaction,
-        IEventDispatcher $dispatcher
+        TransactionManager $transaction
     ) {
         $this->users = $users;
         $this->roles = $roles;
         $this->transaction = $transaction;
         $this->yiiApp = \Yii::$app;
-        $this->dispatcher = $dispatcher;
     }
 
     public function signup(SignupForm $form): void
@@ -53,8 +49,6 @@ class SignupService
             $this->users->save($user);
             $this->roles->assign($user->id, Rbac::ROLE_USER);
         });
-
-        $this->dispatcher->dispatchAll($user->releaseEvents());
     }
 
     public function confirm($token): void
@@ -66,6 +60,5 @@ class SignupService
         $user = $this->users->getByEmailConfirmToken($token);
         $user->confirmSignup();
         $this->users->save($user);
-        $this->dispatcher->dispatchAll($user->releaseEvents());
     }
 }

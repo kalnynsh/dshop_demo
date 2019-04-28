@@ -3,14 +3,22 @@
 namespace shop\repositories;
 
 use shop\entities\User\User;
-
+use shop\dispatchers\IEventDispatcher;
+/**
+ * UserRepository class
+ *
+ * @property ActiveQuery $query
+ * @property IEventDispatcher $dispatcher
+ */
 class UserRepository
 {
     private $query;
+    private $dispatcher;
 
-    public function __construct()
+    public function __construct(IEventDispatcher $dispatcher)
     {
         $this->query = User::find();
+        $this->dispatcher = $dispatcher;
     }
 
     public function findByUsernameOrEmail($value): ?User
@@ -65,6 +73,8 @@ class UserRepository
         if (!$user->save()) {
             throw new \RuntimeException('Saving error.');
         }
+
+        $this->dispatcher->dispatchAll($user->realeaseEvents());
     }
 
     public function remove(User $user): void
@@ -72,6 +82,8 @@ class UserRepository
         if (!$user->delete()) {
             throw new \RuntimeException('Removing error.');
         }
+
+        $this->dispatcher->dispatchAll($user->realeaseEvents());
     }
 
     public function findOne($id): ?User
