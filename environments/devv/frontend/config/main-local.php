@@ -31,6 +31,9 @@ if (!YII_ENV_TEST) {
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         'allowedIPs' => ['*'],
+        'panels' => [
+            'queue' => yii\queue\debug\Panel::class,
+        ],
     ];
 
     $config['bootstrap'][] = 'gii';
