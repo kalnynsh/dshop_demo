@@ -37,7 +37,8 @@
         "fishvision/yii2-migrate": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
         "bshaffer/oauth2-server-php": "^1.11.1",
-        "drewm/mailchimp-api": "^2.5"
+        "drewm/mailchimp-api": "^2.5",
+        "yiisoft/yii2-redis": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
