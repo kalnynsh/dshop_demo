@@ -5,10 +5,13 @@ namespace shop\entities\Shop\Product;
 use yii\web\UploadedFile;
 use yii\db\ActiveRecord;
 use yii\db\ActiveQuery;
+use shop\entities\traits\EventTrait;
 use shop\entities\behaviors\MetaBehavior;
+use shop\entities\aggregators\AggregateRoot;
 use shop\entities\User\WishlistItem;
 use shop\entities\Shop\Tag;
 use shop\entities\Shop\Product\queries\ProductQuery;
+use shop\entities\Shop\Product\events\ProductAppearedInStock;
 use shop\entities\Shop\Product\Photo;
 use shop\entities\Shop\Category;
 use shop\entities\Shop\Brand;
@@ -45,9 +48,12 @@ use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
  * @property Photo $mainPhoto
  * @property Review[] $reviews
  * @property WishlistItem[] $wishlistItems
+ * @property array $events
  */
-class Product extends ActiveRecord
+class Product extends ActiveRecord implements AggregateRoot
 {
+    use EventTrait;
+
     const STATUS_DRAFT = 0;
     const STATUS_ACTIVE = 1;
 
@@ -179,6 +185,10 @@ class Product extends ActiveRecord
 
     public function setQuantity($quantity): void
     {
+        if ($this->quantity == 0 && $quantity > 0) {
+            $this->recordEvent(new ProductAppearedInStock($this));
+        }
+
         $this->quantity = (int)$quantity;
     }
 

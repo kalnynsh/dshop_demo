@@ -107,6 +107,16 @@ class UserRepository
         ]);
     }
 
+    public function getAllByProductInWishlist($productId): iterable
+    {
+        return $this
+            ->query
+            ->alias('u')
+            ->joinWith('wishlistItems w', false, 'INNER JOIN')
+            ->andWhere(['w.product_id' => $productId])
+            ->each();
+    }
+
     private function findBy(array $condition): ?User
     {
         return $this->query->andWhere($condition)->limit(1)->one();

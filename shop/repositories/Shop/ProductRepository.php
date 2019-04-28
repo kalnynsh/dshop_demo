@@ -4,9 +4,17 @@ namespace shop\repositories\Shop;
 
 use shop\entities\Shop\Product\Product;
 use shop\repositories\NotFoundException;
+use shop\dispatchers\IEventDispatcher;
 
 class ProductRepository
 {
+    private $dispatcher;
+
+    public function __construct(IEventDispatcher $dispatcher)
+    {
+        $this->dispatcher = $dispatcher;
+    }
+
     public function get($id): Product
     {
         if (!$product = Product::findOne($id)) {
@@ -59,6 +67,8 @@ class ProductRepository
         if (!$product->save()) {
             throw new \RuntimeException('Saving error.');
         }
+
+        $this->dispatcher->dispatchAll($product->releaseEvents());
     }
 
     public function remove(Product $product): void
@@ -66,5 +76,7 @@ class ProductRepository
         if (!$product->delete()) {
             throw new \RuntimeException('Removing error.');
         }
+
+        $this->dispatcher->dispatchAll($product->releaseEvents());
     }
 }

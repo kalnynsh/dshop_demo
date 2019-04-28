@@ -16,8 +16,10 @@ use shop\services\newsletter\MailNewsletter;
 use shop\services\ContactService;
 use shop\listeners\User\UserSignupRequestedListener;
 use shop\listeners\User\UserSignupConfirmedListener;
+use shop\listeners\Shop\Product\ProductAppearedInStockListener;
 use shop\entities\User\events\UserSignUpRequested;
 use shop\entities\User\events\UserSignUpConfirmed;
+use shop\entities\Shop\Product\events\ProductAppearedInStock;
 use shop\dispatchers\SimpleEventDispatcher;
 use shop\dispatchers\IEventDispatcher;
 use shop\dispatchers\DeferredEventDispatcher;
@@ -116,10 +118,13 @@ class SetUp implements BootstrapInterface
                         $container,
                         [
                             UserSignUpRequested::class => [
-                                UserSignupRequestedListener::class
+                                UserSignupRequestedListener::class,
                             ],
                             UserSignUpConfirmed::class => [
-                                UserSignupConfirmedListener::class
+                                UserSignupConfirmedListener::class,
+                            ],
+                            ProductAppearedInStock::class => [
+                                ProductAppearedInStockListener::class,
                             ],
                         ]
                     )
