@@ -2,15 +2,15 @@
 
 namespace frontend\controllers\shop;
 
-use yii\web\NotFoundHttpException;
-use yii\web\Controller;
-use shop\readModels\Shop\TagReadRepository;
-use shop\readModels\Shop\ProductReadRepository;
-use shop\readModels\Shop\CategoryReadRepository;
-use shop\readModels\Shop\BrandReadRepository;
-use shop\forms\Shop\Search\SearchForm;
-use shop\forms\Shop\ReviewForm;
 use shop\forms\Shop\AddToCartForm;
+use shop\forms\Shop\ReviewForm;
+use shop\forms\Shop\Search\SearchForm;
+use shop\readModels\Shop\BrandReadRepository;
+use shop\readModels\Shop\CategoryReadRepository;
+use shop\readModels\Shop\ProductReadRepository;
+use shop\readModels\Shop\TagReadRepository;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 class CatalogController extends Controller
 {
@@ -50,8 +50,8 @@ class CatalogController extends Controller
         $category = $this->categories->getRoot();
 
         return $this->render('index', [
-                'category' => $category,
-                'dataProvider' => $dataProvider,
+            'category' => $category,
+            'dataProvider' => $dataProvider,
         ]);
     }
 

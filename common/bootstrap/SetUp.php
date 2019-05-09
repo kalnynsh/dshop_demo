@@ -3,16 +3,19 @@
 namespace common\bootstrap;
 
 use yii\rbac\ManagerInterface;
+use yii\queue\Queue;
 use yii\mail\MailerInterface;
 use yii\di\Instance;
 use yii\di\Container;
+use yii\console\ErrorHandler;
 use yii\caching\Cache;
 use yii\base\BootstrapInterface;
 use shop\services\yandex\YandexMarket;
 use shop\services\yandex\ShopInfo;
-use shop\services\sms\SmsRu;
-use shop\services\sms\LoggedSmsSender;
-use shop\services\newsletter\MailNewsletter;
+use shop\services\sms\StubSmsSender;
+// use shop\services\sms\SmsRu;
+// use shop\services\sms\LoggedSmsSender;
+// use shop\services\newsletter\MailNewsletter;
 use shop\services\ContactService;
 use shop\listeners\User\UserSignupRequestedListener;
 use shop\listeners\User\UserSignupConfirmedListener;
@@ -27,9 +30,9 @@ use shop\cart\storage\CombineStorage;
 use shop\cart\cost\calculator\SimpleCost;
 use shop\cart\cost\calculator\DynamicCost;
 use shop\cart\Cart;
-use DrewM\MailChimp\MailChimp;
-use yii\console\ErrorHandler;
-use yii\queue\Queue;
+use shop\services\newsletter\StubMailNewsletter;
+
+// use DrewM\MailChimp\MailChimp;
 
 class SetUp implements BootstrapInterface
 {
@@ -100,21 +103,39 @@ class SetUp implements BootstrapInterface
             ),
         ]);
 
+        // $container->setSingleton(
+        //     MailNewsletter::class,
+        //     function () use ($app) {
+        //         return new MailNewsletter(
+        //             new MailChimp($app->params['mailChimpKey']),
+        //             $app->params['mailChimpListId']
+        //         );
+        //     }
+        // );
+
         $container->setSingleton(
-            MailNewsletter::class,
+            Inewsletter::class,
             function () use ($app) {
-                return new MailNewsletter(
-                    new MailChimp($app->params['mailChimpKey']),
-                    $app->params['mailChimpListId']
+                return new StubMailNewsletter(
+                    \Yii::getLogger()
                 );
             }
         );
 
+        // $container->setSingleton(
+        //     LoggedSmsSender::class,
+        //     function () use ($app) {
+        //         return new LoggedSmsSender(
+        //             new SmsRu($app->params['smsRuKey']),
+        //             \Yii::getLogger()
+        //         );
+        //     }
+        // );
+
         $container->setSingleton(
-            LoggedSmsSender::class,
+            IsmsSender::class,
             function () use ($app) {
-                return new LoggedSmsSender(
-                    new SmsRu($app->params['smsRuKey']),
+                return new StubSmsSender(
                     \Yii::getLogger()
                 );
             }

@@ -31,7 +31,9 @@ class PrifileEditForm extends Model
                 ['phone', 'email'], 'unique',
                 'targetClass' => User::class,
                 'filter' => [
-                    '<>', 'id', $this->_user->id,
+                    '<>',
+                    'id',
+                    $this->_user->id,
                 ],
             ],
         ];

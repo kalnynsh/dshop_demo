@@ -2,17 +2,17 @@
 
 namespace shop\readModels\Shop;
 
-use yii\helpers\ArrayHelper;
-use yii\db\ActiveQuery;
-use yii\data\DataProviderInterface;
-use yii\data\ActiveDataProvider;
-use shop\repositories\Shop\CategoryRepository;
-use shop\forms\Shop\Search\SearchForm;
-use shop\entities\Shop\Tag;
-use shop\entities\Shop\Product\Value;
-use shop\entities\Shop\Product\Product;
-use shop\entities\Shop\Category;
 use shop\entities\Shop\Brand;
+use shop\entities\Shop\Category;
+use shop\entities\Shop\Product\Product;
+use shop\entities\Shop\Product\Value;
+use shop\entities\Shop\Tag;
+use shop\forms\Shop\Search\SearchForm;
+use shop\repositories\Shop\CategoryRepository;
+use yii\data\ActiveDataProvider;
+use yii\data\DataProviderInterface;
+use yii\db\ActiveQuery;
+use yii\helpers\ArrayHelper;
 
 class ProductReadRepository
 {
@@ -37,7 +37,7 @@ class ProductReadRepository
         $query->andWhere([
             'or',
             ['p.category_id' => $ids],
-            ['cas.category_id' => $ids]
+            ['cas.category_id' => $ids],
         ]);
 
         $query->groupBy('p.id');
@@ -59,12 +59,12 @@ class ProductReadRepository
         $query->andWhere([
             'or',
             ['p.category_id' => $ids],
-            ['cas.category_id' => $ids]
+            ['cas.category_id' => $ids],
         ]);
 
         $query->groupBy('p.id');
 
-        return (int)$query->count();
+        return (int) $query->count();
     }
 
     public function getAllByBrand(Brand $brand): DataProviderInterface
@@ -97,16 +97,16 @@ class ProductReadRepository
     public function getAllIterator(): iterable
     {
         return $this->getActiveProductQuery()
-                    ->with(['mainPhoto', 'brand'])
-                    ->each();
+            ->with(['mainPhoto', 'brand'])
+            ->each();
     }
 
-    public function find($id): ?Product
+    public function find($id):  ? Product
     {
         return Product::find()->active()->andWhere(['id' => $id])->one();
     }
 
-    public function search(SearchForm $form): DataProviderInterface
+    public function search(SearchForm $form) : DataProviderInterface
     {
         $query = $this->getActiveProductWithMainPhotoQuery();
 
@@ -126,7 +126,7 @@ class ProductReadRepository
                 $query->andWhere([
                     'or',
                     ['p.category_id' => $ids],
-                    ['cas.category_id' => $ids]
+                    ['cas.category_id' => $ids],
                 ]);
             }
         }
@@ -157,7 +157,7 @@ class ProductReadRepository
                     $foundIds = $q->select('product_id')->column();
 
                     $productIds = $productIds === null ?
-                        $foundIds : array_intersect($productIds, $foundIds);
+                    $foundIds : array_intersect($productIds, $foundIds);
                 }
             }
 
@@ -170,7 +170,7 @@ class ProductReadRepository
             $query->andWhere([
                 'or',
                 ['like', 'code', $form->text],
-                ['like', 'name', $form->text]
+                ['like', 'name', $form->text],
             ]);
         }
 
@@ -214,12 +214,12 @@ class ProductReadRepository
             ->all();
     }
 
-    private function findCategory($catId): ?Category
+    private function findCategory($catId):  ? Category
     {
         return (new CategoryRepository())->find($catId);
     }
 
-    private function getValueQuery(): ActiveQuery
+    private function getValueQuery() : ActiveQuery
     {
         return Value::find();
     }
