@@ -12,6 +12,6 @@ abstract class AJob implements \yii\queue\Job
 
     private function resolveHandler(): callable
     {
-        return [\Yii::createObject(static::class . Handler), 'handle'];
+        return [\Yii::createObject(static::class . 'Handler'), 'handle'];
     }
 }

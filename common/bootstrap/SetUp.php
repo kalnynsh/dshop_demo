@@ -2,35 +2,36 @@
 
 namespace common\bootstrap;
 
-use yii\rbac\ManagerInterface;
-use yii\queue\Queue;
-use yii\mail\MailerInterface;
-use yii\di\Instance;
-use yii\di\Container;
-use yii\console\ErrorHandler;
-use yii\caching\Cache;
-use yii\base\BootstrapInterface;
-use shop\services\yandex\YandexMarket;
-use shop\services\yandex\ShopInfo;
-use shop\services\sms\StubSmsSender;
+use shop\cart\Cart;
+use shop\cart\cost\calculator\DynamicCost;
+use shop\cart\cost\calculator\SimpleCost;
+use shop\cart\storage\CombineStorage;
+use shop\dispatchers\DeferredEventDispatcher;
+use shop\dispatchers\IEventDispatcher;
+use shop\dispatchers\SimpleEventDispatcher;
+use shop\entities\Shop\Product\events\ProductAppearedInStock;
+use shop\entities\User\events\UserSignUpConfirmed;
+use shop\entities\User\events\UserSignUpRequested;
+use shop\jobs\AsyncEventJobHandler;
 // use shop\services\sms\SmsRu;
 // use shop\services\sms\LoggedSmsSender;
 // use shop\services\newsletter\MailNewsletter;
-use shop\services\ContactService;
-use shop\listeners\User\UserSignupRequestedListener;
-use shop\listeners\User\UserSignupConfirmedListener;
 use shop\listeners\Shop\Product\ProductAppearedInStockListener;
-use shop\entities\User\events\UserSignUpRequested;
-use shop\entities\User\events\UserSignUpConfirmed;
-use shop\entities\Shop\Product\events\ProductAppearedInStock;
-use shop\dispatchers\SimpleEventDispatcher;
-use shop\dispatchers\IEventDispatcher;
-use shop\dispatchers\DeferredEventDispatcher;
-use shop\cart\storage\CombineStorage;
-use shop\cart\cost\calculator\SimpleCost;
-use shop\cart\cost\calculator\DynamicCost;
-use shop\cart\Cart;
+use shop\listeners\User\UserSignupConfirmedListener;
+use shop\listeners\User\UserSignupRequestedListener;
+use shop\services\ContactService;
 use shop\services\newsletter\StubMailNewsletter;
+use shop\services\sms\StubSmsSender;
+use shop\services\yandex\ShopInfo;
+use shop\services\yandex\YandexMarket;
+use yii\base\BootstrapInterface;
+use yii\caching\Cache;
+use yii\console\ErrorHandler;
+use yii\di\Container;
+use yii\di\Instance;
+use yii\mail\MailerInterface;
+use yii\queue\Queue;
+use yii\rbac\ManagerInterface;
 
 // use DrewM\MailChimp\MailChimp;
 
@@ -61,7 +62,6 @@ class SetUp implements BootstrapInterface
         $container->setSingleton(Queue::class, function () use ($app) {
             return $app->get('queue');
         });
-
 
         $container->setSingleton(Cache::class, function () use ($app) {
             return $app->cache;
@@ -150,22 +150,26 @@ class SetUp implements BootstrapInterface
             DeferredEventDispatcher::class,
             function (Container $container) {
                 return new DeferredEventDispatcher(
-                    new SimpleEventDispatcher(
-                        $container,
-                        [
-                            UserSignUpRequested::class => [
-                                UserSignupRequestedListener::class,
-                            ],
-                            UserSignUpConfirmed::class => [
-                                UserSignupConfirmedListener::class,
-                            ],
-                            ProductAppearedInStock::class => [
-                                ProductAppearedInStockListener::class,
-                            ],
-                        ]
+                    new AsyncEventDispatcher(
+                        $container->get(Queue::class)
                     )
                 );
             }
         );
+
+        $container->setSingleton(
+            SimpleEventDispatcher::class,
+            function (Container $container) {
+                return new SimpleEventDispatcher($container, [
+                    UserSignUpRequested::class    => [UserSignupRequestedListener::class],
+                    UserSignUpConfirmed::class    => [UserSignUpConfirmedListener::class],
+                    ProductAppearedInStock::class => [ProductAppearedInStockListener::class],
+                ]);
+            }
+        );
+
+        $container->setSingleton(AsyncEventJobHandler::class, [], [
+            Instance::of(SimpleEventDispatcher::class),
+        ]);
     }
 }
