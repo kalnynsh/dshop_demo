@@ -21,6 +21,12 @@ return [
             'assignmentTable' => '{{%auth_assignments}}',
             'ruleTable' => '{{%auth_rules}}',
         ],
+        'redis' => [
+            'class' => yii\redis\Connection::class,
+            'hostname' => 'localhost',
+            'port' => 6379,
+            'database' => 0,
+        ],
         'queue' => [
             'class' => yii\queue\redis\Queue::class,
             'as log' => yii\queue\LogBehavior::class,

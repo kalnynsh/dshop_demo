@@ -183,7 +183,7 @@ class Product extends ActiveRecord implements AggregateRoot
         $this->setQuantity($quantity);
     }
 
-    public function setQuantity($quantity): void
+    private function setQuantity($quantity): void
     {
         if ($this->quantity == 0 && $quantity > 0) {
             $this->recordEvent(new ProductAppearedInStock($this));

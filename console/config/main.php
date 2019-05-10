@@ -12,6 +12,7 @@ return [
     'bootstrap' => [
         'log',
         'common\bootstrap\SetUp',
+        'queue',
     ],
     'controllerNamespace' => 'console\controllers',
     'aliases' => [
@@ -45,6 +46,10 @@ return [
         ],
         'backendUrlManager' => require __DIR__ . '/../../backend/config/urlManager.php',
         'frontendUrlManager' => require __DIR__ . '/../../frontend/config/urlManager.php',
+        'queue' => [
+            'class' => yii\queue\redis\Queue::class,
+            'as log' => yii\queue\LogBehavior::class,
+        ],
     ],
     'params' => $params,
 ];
