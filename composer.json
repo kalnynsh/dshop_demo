@@ -38,7 +38,8 @@
         "guzzlehttp/guzzle": "^6.3",
         "bshaffer/oauth2-server-php": "^1.11.1",
         "drewm/mailchimp-api": "^2.5",
-        "yiisoft/yii2-redis": "^2.0"
+        "yiisoft/yii2-redis": "^2.0",
+        "elasticsearch/elasticsearch": "^5.2"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

@@ -23,12 +23,12 @@ echo "Done!"
 info "Add Php 7.2 repository"
 add-apt-repository ppa:ondrej/php -y
 
-# info "Add Oracle JDK repository"
-# add-apt-repository ppa:webupd8team/java -y
+info "Add Oracle JDK repository"
+add-apt-repository ppa:webupd8team/java -y
 
-# info "Add ElasticSearch sources"
-# wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add -
-# echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | tee -a /etc/apt/sources.list.d/elastic-5.x.list
+info "Add ElasticSearch sources"
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add -
+echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | tee -a /etc/apt/sources.list.d/elastic-5.x.list
 
 info "Update OS software"
 apt-get update
@@ -42,16 +42,16 @@ apt-get install -y unzip
 apt-get install -y nginx
 apt-get install -y mysql-server-5.7
 
-# info "Install Oracle JDK"
-# debconf-set-selections <<< "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true"
-# debconf-set-selections <<< "oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true"
-# apt-get install -y oracle-java8-installer
+info "Install Oracle JDK"
+debconf-set-selections <<< "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true"
+debconf-set-selections <<< "oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true"
+apt-get install -y oracle-java8-installer
 
-# info "Install ElasticSearch"
-# apt-get install -y elasticsearch
-# sed -i 's/-Xms2g/-Xms128m/' /etc/elasticsearch/jvm.options
-# sed -i 's/-Xmx2g/-Xmx128m/' /etc/elasticsearch/jvm.options
-# service elasticsearch restart
+info "Install ElasticSearch"
+apt-get install -y elasticsearch
+sed -i 's/-Xms2g/-Xms128m/' /etc/elasticsearch/jvm.options
+sed -i 's/-Xmx2g/-Xmx128m/' /etc/elasticsearch/jvm.options
+service elasticsearch restart
 
 info "Install Redis"
 apt-get install -y redis-server

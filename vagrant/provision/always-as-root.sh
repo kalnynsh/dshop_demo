@@ -11,4 +11,5 @@ service php7.2-fpm restart
 service nginx restart
 service mysql restart
 service redis restart
+service elasticsearch restart
 service supervisor restart
