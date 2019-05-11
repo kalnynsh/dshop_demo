@@ -35,8 +35,10 @@ use shop\cart\storage\CombineStorage;
 use shop\cart\cost\calculator\SimpleCost;
 use shop\cart\cost\calculator\DynamicCost;
 use shop\cart\Cart;
-
 // use DrewM\MailChimp\MailChimp;
+// use League\Flysystem\Adapter\Ftp;
+// use League\Flysystem\Filesystem;
+// use shop\extra\YiiDreamTeam\ImageUploadBehavior;
 
 class SetUp implements BootstrapInterface
 {
@@ -183,4 +185,12 @@ class SetUp implements BootstrapInterface
             Instance::of(SimpleEventDispatcher::class),
         ]);
     }
+
+    /*
+    $container->setSingleton(Filesystem::class, function () use ($app) {
+        return new Filesystem(new Ftp($app->params['ftp']));
+    });
+
+    $container->set(ImageUploadBehavior::class, FlySystemImageUploadBehavior::class);
+    */
 }

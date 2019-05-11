@@ -39,7 +39,8 @@
         "bshaffer/oauth2-server-php": "^1.11.1",
         "drewm/mailchimp-api": "^2.5",
         "yiisoft/yii2-redis": "^2.0",
-        "elasticsearch/elasticsearch": "^5.2"
+        "elasticsearch/elasticsearch": "^5.2",
+        "league/flysystem": "^1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
