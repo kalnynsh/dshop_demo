@@ -2,11 +2,12 @@
 
 namespace frontend\controllers;
 
-use yii\web\Response;
-use yii\web\Controller;
-use yii\helpers\Url;
-use shop\services\yandex\YandexMarket;
 use shop\entities\Shop\Product\Product;
+use shop\services\yandex\YandexMarket;
+use yii\caching\TagDependency;
+use yii\helpers\Url;
+use yii\web\Controller;
+use yii\web\Response;
 
 class MarketController extends Controller
 {
@@ -30,17 +31,25 @@ class MarketController extends Controller
             return $this->market->generate(function (Product $product) {
                 return Url::to([
                     '/shop/catalog/product',
-                    'id' => $product->id
+                    'id' => $product->id,
                 ], true);
             });
-        });
+        },
+            null,
+            new TagDependency([
+                'tags' => [
+                    'categories',
+                    'products',
+                ],
+            ])
+        );
 
         return $this->yiiApp->response->sendContentAsFile(
             $xml,
             'yandex-market.xml',
             [
                 'mimeType' => 'application/xml',
-                'inline' => true,
+                'inline'   => true,
             ]
         );
     }

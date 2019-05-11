@@ -18,6 +18,7 @@ use shop\entities\Shop\Category as ShopCategory;
 use shop\entities\Content\Page;
 use shop\entities\Blog\Post\Post;
 use shop\entities\Blog\Category as BlogCategory;
+use yii\caching\TagDependency;
 
 class SitemapController extends Controller
 {
@@ -167,7 +168,8 @@ class SitemapController extends Controller
                     },
                     $this->shopCategories->getAll()
                 ));
-            }
+            },
+            new TagDependency(['tags' => ['products']])
         );
     }
 
@@ -189,7 +191,8 @@ class SitemapController extends Controller
                     range(0, (int)($this->products->count() / self::ITEMS_PER_PAGE))
                     )
                 );
-            }
+            },
+            new TagDependency(['tags' => ['products']])
         );
     }
 
@@ -214,7 +217,8 @@ class SitemapController extends Controller
                     },
                     $this->products->getAllByRange($start, self::ITEMS_PER_PAGE)
                 ));
-            }
+            },
+            new TagDependency(['tags' => ['products']])
         );
     }
 

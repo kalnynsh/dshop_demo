@@ -5,6 +5,7 @@ namespace frontend\urls;
 use yii\web\UrlRuleInterface;
 use yii\web\UrlNormalizerRedirectException;
 use yii\helpers\ArrayHelper;
+use yii\caching\TagDependency;
 use yii\caching\Cache;
 use yii\base\InvalidParamException;
 use yii\base\BaseObject;
@@ -57,7 +58,9 @@ class CategoryUrlRule extends BaseObject implements UrlRuleInterface
                         'id' => $category->id,
                         'path' => $this->getCategoryPath($category),
                     ];
-                }
+                },
+                null,
+                new TagDependency(['tags' => ['categories']])
             );
 
             if (empty($result['id'])) {

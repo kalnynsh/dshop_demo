@@ -2,38 +2,39 @@
 
 namespace common\bootstrap;
 
-use shop\cart\Cart;
-use shop\cart\cost\calculator\DynamicCost;
-use shop\cart\cost\calculator\SimpleCost;
-use shop\cart\storage\CombineStorage;
-use shop\dispatchers\DeferredEventDispatcher;
-use shop\dispatchers\IEventDispatcher;
-use shop\dispatchers\SimpleEventDispatcher;
-use shop\entities\Shop\Product\events\ProductAppearedInStock;
-use shop\entities\User\events\UserSignupConfirmed;
-use shop\entities\User\events\UserSignupRequested;
-use shop\jobs\AsyncEventJobHandler;
+use yii\rbac\ManagerInterface;
+use yii\queue\Queue;
+use yii\mail\MailerInterface;
+use yii\di\Instance;
+use yii\di\Container;
+use yii\console\ErrorHandler;
+use yii\caching\Cache;
+use yii\base\BootstrapInterface;
+use shop\services\yandex\YandexMarket;
+use shop\services\yandex\ShopInfo;
+use shop\services\sms\StubSmsSender;
 // use shop\services\sms\SmsRu;
 // use shop\services\sms\LoggedSmsSender;
 // use shop\services\newsletter\MailNewsletter;
-use shop\listeners\Shop\Product\ProductAppearedInStockListener;
-use shop\listeners\User\UserSignupConfirmedListener;
-use shop\listeners\User\UserSignupRequestedListener;
-use shop\repositories\events\EntityRemoved;
-use shop\repositories\events\EntitySaved;
-use shop\services\ContactService;
 use shop\services\newsletter\StubMailNewsletter;
-use shop\services\sms\StubSmsSender;
-use shop\services\yandex\ShopInfo;
-use shop\services\yandex\YandexMarket;
-use yii\base\BootstrapInterface;
-use yii\caching\Cache;
-use yii\console\ErrorHandler;
-use yii\di\Container;
-use yii\di\Instance;
-use yii\mail\MailerInterface;
-use yii\queue\Queue;
-use yii\rbac\ManagerInterface;
+use shop\services\ContactService;
+use shop\repositories\events\EntitySaved;
+use shop\repositories\events\EntityRemoved;
+use shop\listeners\User\UserSignupRequestedListener;
+use shop\listeners\User\UserSignupConfirmedListener;
+use shop\listeners\Shop\Product\ProductAppearedInStockListener;
+use shop\listeners\Shop\Category\CategoryPersistenceListener;
+use shop\jobs\AsyncEventJobHandler;
+use shop\entities\User\events\UserSignupRequested;
+use shop\entities\User\events\UserSignupConfirmed;
+use shop\entities\Shop\Product\events\ProductAppearedInStock;
+use shop\dispatchers\SimpleEventDispatcher;
+use shop\dispatchers\IEventDispatcher;
+use shop\dispatchers\DeferredEventDispatcher;
+use shop\cart\storage\CombineStorage;
+use shop\cart\cost\calculator\SimpleCost;
+use shop\cart\cost\calculator\DynamicCost;
+use shop\cart\Cart;
 
 // use DrewM\MailChimp\MailChimp;
 
@@ -166,8 +167,14 @@ class SetUp implements BootstrapInterface
                     UserSignupRequested::class    => [UserSignupRequestedListener::class],
                     UserSignupConfirmed::class    => [UserSignupConfirmedListener::class],
                     ProductAppearedInStock::class => [ProductAppearedInStockListener::class],
-                    EntitySaved::class            => [ProductSearchSavedListener::class],
-                    EntityRemoved::class          => [ProductSearchRemovedListener::class],
+                    EntitySaved::class            => [
+                        ProductSearchSavedListener::class,
+                        CategoryPersistenceListener::class,
+                    ],
+                    EntityRemoved::class          => [
+                        ProductSearchRemovedListener::class,
+                        CategoryPersistenceListener::class,
+                    ],
                 ]);
             }
         );
