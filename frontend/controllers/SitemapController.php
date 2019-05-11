@@ -19,6 +19,7 @@ use shop\entities\Content\Page;
 use shop\entities\Blog\Post\Post;
 use shop\entities\Blog\Category as BlogCategory;
 use yii\caching\TagDependency;
+use yii\caching\Dependency;
 
 class SitemapController extends Controller
 {
@@ -222,10 +223,18 @@ class SitemapController extends Controller
         );
     }
 
-    private function renderSitemap($key, callable $callback): Response
-    {
+    private function renderSitemap(
+        $key,
+        callable $callback,
+        Dependency $dependency = null
+    ): Response {
         return $this->yiiApp->response->sendContentAsFile(
-            $this->yiiApp->cache->getOrSet($key, $callback),
+            $this->yiiApp->cache->getOrSet(
+                $key,
+                $callback,
+                null,
+                $dependency
+            ),
             Url::canonical(),
             [
                 'mimeType' => 'application/xml',
