@@ -10,8 +10,8 @@ use shop\dispatchers\DeferredEventDispatcher;
 use shop\dispatchers\IEventDispatcher;
 use shop\dispatchers\SimpleEventDispatcher;
 use shop\entities\Shop\Product\events\ProductAppearedInStock;
-use shop\entities\User\events\UserSignUpConfirmed;
-use shop\entities\User\events\UserSignUpRequested;
+use shop\entities\User\events\UserSignupConfirmed;
+use shop\entities\User\events\UserSignupRequested;
 use shop\jobs\AsyncEventJobHandler;
 // use shop\services\sms\SmsRu;
 // use shop\services\sms\LoggedSmsSender;
@@ -19,6 +19,8 @@ use shop\jobs\AsyncEventJobHandler;
 use shop\listeners\Shop\Product\ProductAppearedInStockListener;
 use shop\listeners\User\UserSignupConfirmedListener;
 use shop\listeners\User\UserSignupRequestedListener;
+use shop\repositories\events\EntityRemoved;
+use shop\repositories\events\EntitySaved;
 use shop\services\ContactService;
 use shop\services\newsletter\StubMailNewsletter;
 use shop\services\sms\StubSmsSender;
@@ -161,9 +163,11 @@ class SetUp implements BootstrapInterface
             SimpleEventDispatcher::class,
             function (Container $container) {
                 return new SimpleEventDispatcher($container, [
-                    UserSignUpRequested::class    => [UserSignupRequestedListener::class],
-                    UserSignUpConfirmed::class    => [UserSignUpConfirmedListener::class],
+                    UserSignupRequested::class    => [UserSignupRequestedListener::class],
+                    UserSignupConfirmed::class    => [UserSignupConfirmedListener::class],
                     ProductAppearedInStock::class => [ProductAppearedInStockListener::class],
+                    EntitySaved::class            => [ProductSearchSavedListener::class],
+                    EntityRemoved::class          => [ProductSearchRemovedListener::class],
                 ]);
             }
         );

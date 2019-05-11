@@ -4,7 +4,7 @@ namespace shop\entities\User\events;
 
 use shop\entities\User\User;
 
-class UserSignUpConfirmed
+class UserSignupConfirmed
 {
     public $user;
 
